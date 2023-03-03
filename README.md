@@ -30,13 +30,46 @@ O jogo é repleto de ação, aventura e emoção, com uma história envolvente e
 
 É uma jornada épica, cheia de perigos e desafios, mas também de heroísmo e aventura. Os jogadores precisam estar preparados para lutar pelo bem e enfrentar o mal, em uma das maiores aventuras dos mundos conhecidos.
 
+## Regras do Jogo
 
+### Skills
+
+* Dano de Ataque
+* Velocidade de Ataque
+* Esquiva
+* Resistência
+* Velocidade de movimento
+
+
+
+## Deuses
+
+Deus          | Arma                                | Habilidade            | Descrição
+---------     | ------                              | ------                | ------
+Zeus          | Raio de Zeus                        | Chamado do Trovão     | Dano e Atordoamento a todos os inimigos
+Athena        | Escudo de Ouro                      | Inspiração Divina     | Maior resistência ao personagem
+Thor          | Martelo Mjornir                     | Agilidade DIvina      | Bônus de dano de ataque e aumento da esquiva
+Freya         | Espada Valkyrie                     | Beleza Divina         | Enfraquecimento da resistência dos inimigos
+Anúbis        | Foice de Anúbis                     | Necromancia           | Pode invocar espíritos para lutar a seu favor
+Isis          | Adaga de Isis                       | Invocação de vento    | Atordoamento em todos os inimigos 
+Tsukuyomi     | Yumi (Arco)                         | Transposição Sagrada  | Permite o jogador teletransportar por curtas distâncias
+Amaterasu     | Ame-no-Nuhoko (Lança Celestial)     | Fúria dos céus        | Aumenta a velocidade de ataque e movimento
+Shiva         | Trishula (Tridente)                 | Terceiro Olho         | Dano progressivo aos inimigos na frente do personagem
+Ganesha       | Ankusha (Gancho)                    | Benção                | Cura ao personagem e a todos os aliados
 
 ## Fases
 
-[Em Desenvolvimento...]
+* Fase 01 -
 
+* Fase 02 - 
 
+* Fase 03 - 
+
+* Fase 04 - 
+
+* Fase 05 - 
+
+* Fase Final - 
 
 ## Referências
 
@@ -45,3 +78,16 @@ O jogo tem diversas referências com a cultura pop como os filmes do Universo Ci
 As referências das mitologias e histórias foram retiradas de livros como Deuses Americanos e Mitologia Nórdica, ambos do Neil Gaiman, Odisseia de Homero. Também pegamos como referência a franquia de jogos God of War.
 
 [Iremos acresentar mais algumas referências durante o desenvolvimento do projeto]
+
+## Receita Financeira
+
+* Venda do Jogo
+* Anúncios patrocinados cada passagem de fase do jogo
+
+Criação de uma moeda que possibilitará
+* Roletar novamente a "Graça Divina"
+* Compra de itens customizáveis para os personagens principais como roupas, cabelo, etc...
+* Passe de Batalha que tenha alguns benefícios como roletar "Graça Divina" gratuita, itens customizáveis do passe e moedas
+
+Posteriormente criação de um modo arena multiplayer que possibilitará
+  * Baús randômicos setorizados por skins do personages/arma
