@@ -42,6 +42,6 @@ O jogo é repleto de ação, aventura e emoção, com uma história envolvente e
 
 O jogo tem diversas referências com a cultura pop como os filmes do Universo Cinematográfico da Marvel Studios (UCM), a saga de HQs da DC Comics denominada de Crise das Infinitas Terras além disso possui referências da coleção de livros do Percy Jackson e os Olimpianos escritas pelo Rick Riordan e o recente filme lançado Gato de Botas: O Último Desejo.
 
-As referências das mitologias e histórias foram retiradas de livros como Deuses Americanos e Mitologia Nórdica, ambos do Neil Gaiman, Odisseia de Homero,.
+As referências das mitologias e histórias foram retiradas de livros como Deuses Americanos e Mitologia Nórdica, ambos do Neil Gaiman, Odisseia de Homero. Também pegamos como referência a franquia de jogos God of War.
 
 [Iremos acresentar mais algumas referências durante o desenvolvimento do projeto]
