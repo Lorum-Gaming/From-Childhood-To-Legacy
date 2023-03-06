@@ -62,18 +62,38 @@ Shiva         | Trishula (Tridente)                 | Terceiro Olho         | Da
 Ganesha       | Ankusha (Gancho)                    | Benção                | Cura ao personagem e a todos os aliados
 
 ## Fases
+ 
+* Fase 1: Mitologia Hindu </br>
+Ambiente: Cidade indiana antiga com vielas </br>
+Bots secundários: Asura e nagas </br>
+Vilão principal: Ravana </br>
 
-* Fase 01 -
+* Fase 2: Mitologia Japonesa </br>
+Ambiente: Um santuário antigo no topo de uma montanha, com construções de madeira e telhados vermelhos </br>
+Bots secundários: Oni e Samurais amaldiçoados </br>
+Vilão principal: Orochi (serpente de oito cabeças)
 
-* Fase 02 - 
+* Fase 3: Mitologia Egípcia </br>
+Ambiente: Pirâmides ao fundo e templos antigos </br>
+Bots secundários: Múmias e escaravelhos </br>
+Vilão Principal: Esfinge </br>
 
-* Fase 03 - 
+* Fase 4: Mitologia grega </br>
+Ambiente: Labirinto do Minotauro (Inspiração Yin e Yang/Cegos no Labirinto) </br>
+Bots secundários: Harpias e Cérbero (1 só) antes do minotauro </br>
+Vilão principal: Minotauro </br>
 
-* Fase 04 - 
+* Fase 5: Mitologia Nórdica 
+Ambiente: Florestas durante toda a fase, Yggdrasil (Árvore da vida) no final. 
+Bots secundários: Gigantes de Gelo e trolls 
+Vilão principal: Dragão Níðhöggr.
 
-* Fase 05 - 
 
-* Fase Final - 
+* Fase Final: 
+Ambiente: Um templo sombrio, em ruínas, com pedras escuras. </br>
+Bots secundários: Demônios controlados pelo justiceiro. </br>
+Vilão principal: Justiceiro dos deuses. (O vilão é um ser colossal e aterrorizante, com tentáculos e garras afiadas, capaz de controlar a realidade ao seu redor. A equipe deve enfrentar o carniceiro em uma batalha épica, usando todas as habilidades e armas que adquiriram ao longo do jogo). </br>
+
 
 ## Referências
 
