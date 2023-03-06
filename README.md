@@ -32,9 +32,19 @@ O jogo é repleto de ação, aventura e emoção, com uma história envolvente e
 
 ## Regras do Jogo
 
+* A câmera acompanhará o jogador
+* Há uma limitação no cenário no eixo X, caso o jogador caia (y < 0) ele morrerá e caso o jogador ultrapasse o cenário (y > 0) nada acontecerá
+* O jogo poderá ser jogado solo ou multiplayer (com conversação)
+* Cada fase terá um sistema de pontuação que será um cálculo entre "tempo de jogo x dano causado x dano sofrido"
+* A vida do jogador será um total de "vida base + aprimoramentos", ele tomará dano pelo ataque de bots. No modo solo caso o jogador morra a fase resetará. No modo multiplayer caso o jogador x morra o outro jogador poderá continuar a fase sem ele, caso ele também morra a fase resetará.
+* Os bots poderão aleatoriamente droppar aprimoramentos de skills
+* Haverá armas de curto, médio e longo alcance
+* A fase terminará quando o boss final de cada fase for derrotado. 
+* Não é necessário matar todos os bots.
+
 ## Objetivos do Jogo
 
-* Passar cada fase e conseguir parte da relíquia, para isso será necessário matar todos os bots e derrotar o vilão final de cada fase. Após o resgate das relíquias é necessário derrotar o vilão final.
+* Passar cada fase e conseguir parte da relíquia, para isso será necessário passar por toda a fase derrotar o boss final de cada fase. Após o resgate das relíquias é necessário derrotar o vilão final.
 
 ### Skills
 
