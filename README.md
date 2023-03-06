@@ -32,6 +32,10 @@ O jogo é repleto de ação, aventura e emoção, com uma história envolvente e
 
 ## Regras do Jogo
 
+## Objetivos do Jogo
+
+* Passar cada fase e conseguir parte da relíquia, para isso será necessário matar todos os bots e derrotar o vilão final de cada fase. Após o resgate das relíquias é necessário derrotar o vilão final.
+
 ### Skills
 
 * Dano de Ataque
@@ -73,9 +77,9 @@ Ganesha       | Ankusha (Gancho)                    | Benção                | 
 
 ## Referências
 
-O jogo tem diversas referências com a cultura pop como os filmes do Universo Cinematográfico da Marvel Studios (UCM), a saga de HQs da DC Comics denominada de Crise das Infinitas Terras além disso possui referências da coleção de livros do Percy Jackson e os Olimpianos escritas pelo Rick Riordan e o recente filme lançado Gato de Botas: O Último Desejo.
+O jogo tem diversas referências com a cultura pop como os filmes do  [Universo Cinematográfico da Marvel Studios (UCM)](https://pt.wikipedia.org/wiki/Universo_Cinematogr%C3%A1fico_Marvel), a saga de HQs da DC Comics denominada de [Crise das Infinitas Terras](https://pt.wikipedia.org/wiki/Crise_nas_Infinitas_Terras)além disso possui referências da coleção de livros do [Percy Jackson e os Olimpianos](https://pt.wikipedia.org/wiki/Percy_Jackson_%26_the_Olympians) escritas pelo Rick Riordan e o recente filme lançado [Gato de Botas: O Último Desejo](https://pt.wikipedia.org/wiki/Puss_in_Boots:_The_Last_Wish).
 
-As referências das mitologias e histórias foram retiradas de livros como Deuses Americanos e Mitologia Nórdica, ambos do Neil Gaiman, Odisseia de Homero. Também pegamos como referência a franquia de jogos God of War.
+As referências das mitologias e histórias foram retiradas de livros como [Deuses Americanos](https://pt.wikipedia.org/wiki/American_Gods) e [Mitologia Nórdica](https://pt.wikipedia.org/wiki/Mitologia_n%C3%B3rdica), ambos do [Neil Gaiman](https://pt.wikipedia.org/wiki/Neil_Gaiman) pegamos referência também como a [Odisseia de Homero](https://pt.wikipedia.org/wiki/Odisseia). Também pegamos como referência a franquia de jogos [God of War](https://pt.wikipedia.org/wiki/God_of_War)e [Assasin's Creed](https://pt.wikipedia.org/wiki/Assassin%27s_Creed).
 
 [Iremos acresentar mais algumas referências durante o desenvolvimento do projeto]
 
