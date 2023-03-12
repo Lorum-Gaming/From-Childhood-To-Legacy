@@ -1,0 +1,24 @@
+{
+  "name": "god-between-us",
+  "version": "1.0.0",
+  "description": "## Premissa do jogo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lorum-Gaming/God-Between-Us.git"
+  },
+  "author": "Eduardo Ferraz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lorum-Gaming/God-Between-Us/issues"
+  },
+  "homepage": "https://github.com/Lorum-Gaming/God-Between-Us#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  }
+}
