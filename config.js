@@ -9,4 +9,11 @@ export default {
             debug: true,
         },
     },
+    scale: {
+        mode: Phaser.Scale.FIT,
+        parent: "game-container",
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 800,
+        height: 600,
+    },
 };

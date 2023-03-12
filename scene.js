@@ -32,7 +32,7 @@ export default class OpeningScene extends Phaser.Scene {
     
     
         this.player = this.physics.add.sprite(100, 450, 'dude'); // (x, y, gameObject)
-        this.player.setBounce(0.4);
+        this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
 
         this.anims.create({
@@ -84,7 +84,7 @@ export default class OpeningScene extends Phaser.Scene {
         // What is overlap?
         this.physics.add.overlap(
             this.player,
-            this.stats,
+            this.stars,
             this.collectStar,
             null,
             this
@@ -141,7 +141,9 @@ export default class OpeningScene extends Phaser.Scene {
                 child.enableBody(true, child.x, 0, true, true);
             });
 
-            var x = player.x < 400 ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+            var x = 
+                player.x < 400 
+                    ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
             
             var bomb = this.bombs.create(x, 16, "bomb");
             bomb.setBounce(1);
