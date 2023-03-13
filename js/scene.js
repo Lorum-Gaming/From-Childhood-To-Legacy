@@ -103,6 +103,7 @@ export default class OpeningScene extends Phaser.Scene {
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160);
             this.player.anims.play('left', true);
+            setTimeout(20)
             
         } else if (this.cursors.right.isDown) {
             this.player.setVelocityX(160);     
