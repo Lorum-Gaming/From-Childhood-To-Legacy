@@ -8,7 +8,10 @@ export default class OpeningScene extends Phaser.Scene {
     }
 
     preload () {
-        this.load.image('background', 'assets/packageSprites/Background_0.png');
+        this.load.image('background', 'assets/packageSprites/background.png');
+        this.load.image('overlay', 'assets/packageSprites/overlay.png');
+
+
         this.load.image('ground', 'assets/platform.png');
         this.load.spritesheet('dude', 'assets/dude.png',
         { frameWidth: 32, frameHeight: 32});
@@ -19,14 +22,17 @@ export default class OpeningScene extends Phaser.Scene {
 
     create() {
         this.add.image(500, 300, 'background');
+        this.add.image(400, 400, 'overlay');
+
+
         this.platforms = this.physics.add.staticGroup();
-        this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+        this.platforms.create(400, 568, 'ground').setScale(3).refreshBody();
     
         this.platforms.create(600, 400, 'ground');
         this.platforms.create(50, 250, 'ground');
         this.platforms.create(750, 220, 'ground');
     
-        this.player = this.physics.add.sprite(100, 450, 'dude').setScale(2); // (x, y, gameObject)
+        this.player = this.physics.add.sprite(100, 450, 'dude').setScale(1.8).refreshBody(); // (x, y, gameObject)
         this.player.setBounce(0);
         this.player.setCollideWorldBounds(true);
 
@@ -68,9 +74,9 @@ export default class OpeningScene extends Phaser.Scene {
         this.anims.create({
             key: 'fall',
             frames: this.anims.generateFrameNumbers('dude', {
-                start: 45, end: 45
+                start: 44, end: 44
             }),
-            frameRate: 10,
+            frameRate: 10, 
         })
         
         this.cursors = this.input.keyboard.createCursorKeys();
