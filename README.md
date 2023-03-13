@@ -102,7 +102,7 @@ Vilão principal: Dragão Níðhöggr.
 * Fase Final: 
 Ambiente: Um templo sombrio, em ruínas, com pedras escuras. </br>
 Bots secundários: Demônios controlados pelo justiceiro. </br>
-Vilão principal: Justiceiro dos deuses. (O vilão é um ser colossal e aterrorizante, com tentáculos e garras afiadas, capaz de controlar a realidade ao seu redor. A equipe deve enfrentar o carniceiro em uma batalha épica, usando todas as habilidades e armas que adquiriram ao longo do jogo). </br>
+Vilão principal: Ceifador Divino. (O vilão é um ser colossal e aterrorizante, com tentáculos e garras afiadas, capaz de controlar a realidade ao seu redor. A equipe deve enfrentar o ceifador em uma batalha épica, usando todas as habilidades e armas que adquiriram ao longo do jogo). </br>
 
 
 ## Referências
