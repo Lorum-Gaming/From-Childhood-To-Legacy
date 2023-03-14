@@ -1,3 +1,6 @@
+import { openingScene } from './scenes/openingScene.js';
+import { phase01 } from './scenes/phase01';
+
 export default {
     type: Phaser.AUTO,
     width: 800,
@@ -16,4 +19,5 @@ export default {
         width: 800,
         height: 450,
     },
+    scene: [openingScene, phase01]
 };
