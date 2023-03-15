@@ -17,7 +17,7 @@ export default class menuScene extends Phaser.Scene {
         this.button.on(
             "pointerdown",
             function () {
-                this.scene.start(serverScene);
+                this.game.scene.start("serverScene");
             },
             this
         )
