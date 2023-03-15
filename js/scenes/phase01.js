@@ -4,7 +4,7 @@ export default class phase01 extends Phaser.Scene {
     }
 
     preload () {
-        alert("Phase 01")
+        alert("Enter in Phase 01");
     }
 
     create() {

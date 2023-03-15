@@ -1,3 +1,7 @@
+import menuScene from './scenes/menuScene.js';
+import serverScene from './scenes/serverScene.js';
+import phase01 from './scenes/phase01.js';
+
 export default {
     type: Phaser.AUTO,
     width: 800,
@@ -17,5 +21,6 @@ export default {
         width: 800,
         height: 450,
     },
+    scene: [menuScene, serverScene, phase01],
     
 };

@@ -1,4 +1,4 @@
-
+import serverScene from "./serverScene.js";
 export default class menuScene extends Phaser.Scene {
     constructor() {
         super("menuScene");
@@ -7,6 +7,7 @@ export default class menuScene extends Phaser.Scene {
 
     preload () {
         this.load.image("backgroundImage", "../../assets/backgroundMenu.png");
+        alert('Enter in ServerScene');
     }
 
     create() {
@@ -16,9 +17,8 @@ export default class menuScene extends Phaser.Scene {
         this.button.on(
             "pointerdown",
             function () {
-                alert('Change Scene')
+                this.scene.start(serverScene);
             },
-            
             this
         )
     };

@@ -1,3 +1,4 @@
+import phase01 from "./phase01.js";
 
 export default class serverScene extends Phaser.Scene {
     constructor() {
@@ -14,7 +15,7 @@ export default class serverScene extends Phaser.Scene {
         this.load.image("server02", "../../assets/servers/2.png");
         this.load.image("server03", "../../assets/servers/3.png");
         this.load.image("server04", "../../assets/servers/4.png");
-        
+        alert("Enter in ServerScene");
     }
 
     create() {
@@ -28,7 +29,8 @@ export default class serverScene extends Phaser.Scene {
         this.serverButton01.on(
             "pointerdown",
             function () {
-                alert('Server 01')
+                alert('Server 01');
+                this.scene.start(phase01);
             },
             
             this
@@ -37,7 +39,7 @@ export default class serverScene extends Phaser.Scene {
         this.serverButton02.on(
             "pointerdown",
             function () {
-                alert('Server 02')
+                alert('Server 02');
             },
             
             this
@@ -47,7 +49,7 @@ export default class serverScene extends Phaser.Scene {
         this.serverButton03.on(
             "pointerdown",
             function () {
-                alert('Server 03')
+                alert('Server 03');
             },
             
             this
@@ -57,7 +59,7 @@ export default class serverScene extends Phaser.Scene {
         this.serverButton04.on(
             "pointerdown",
             function () {
-                alert('Server 04')
+                alert('Server 04');
             },
             
             this
