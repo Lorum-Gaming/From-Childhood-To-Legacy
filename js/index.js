@@ -2,8 +2,9 @@
 import config from "./config.js";
 //
 // Scenes
+import menuScene from "./scenes/menuScene.js";
 import serverScene from "./scenes/serverScene.js";
-import phase01 from "./scenes/phase01.js";
+import level01 from "./scenes/level01.js";
 
 class Game extends Phaser.Game {
   constructor() {
@@ -16,9 +17,10 @@ class Game extends Phaser.Game {
     });
     //
     // Scenes
+    this.scene.add("menuScene", menuScene);
     this.scene.add("serverScene", serverScene);
-    this.scene.add("phase01", phase01);
-    this.scene.start("serverScene");
+    this.scene.add("level01", level01);
+    this.scene.start("level01");
   }
 }
 

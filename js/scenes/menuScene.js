@@ -1,4 +1,3 @@
-import serverScene from "./serverScene.js";
 export default class menuScene extends Phaser.Scene {
     constructor() {
         super("menuScene");
@@ -7,7 +6,7 @@ export default class menuScene extends Phaser.Scene {
 
     preload () {
         this.load.image("backgroundImage", "../../assets/backgroundMenu.png");
-        alert('Enter in ServerScene');
+        alert('Enter in menuScene');
     }
 
     create() {
