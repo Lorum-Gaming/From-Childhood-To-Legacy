@@ -73,7 +73,7 @@ export default class serverScene extends Phaser.Scene {
   update() {
     if (this.game.socket.connected) {
       this.game.socket.emit("scene", {
-        scene: 1,
+        scene: 2,
         player: this.game.socket.id,
       });
     }
