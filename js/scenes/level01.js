@@ -4,9 +4,23 @@ export default class level01 extends Phaser.Scene {
     this.map;
     this.tileset;
     this.platforms;
+
+    // Variables Player1
     this.player1;
+    this.P1Jump = false;
+    this.P1JumpDelay = 0;
+    this.P1Position = "right"; // Player turn right or left
+
+    // Keys
     this.cursors;
-    this.debugGraphics;
+    this.keyW;
+    this.keyA;
+    this.keyS;
+    this.keyD;
+    this.keyP;
+    this.keyENTER;
+
+
   }
 
   preload() {
@@ -34,8 +48,7 @@ export default class level01 extends Phaser.Scene {
     this.platforms.setCollisionByProperty({ collides: true });
 
     this.player1 = this.physics.add.sprite(100, 50, 'player1');
-
-    this.player1.setBounce(0.2);
+    
     this.player1.setCollideWorldBounds(true);
 
     this.physics.add.collider(this.player1, this.platforms, null, null, this);
@@ -61,69 +74,27 @@ export default class level01 extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: 'left',
+      key: 'run',
       frames: this.anims.generateFrameNumbers('player1', {
         start: 24, end: 31
       }),
       frameRate: 10,
       repeat: -1  // loop
-    });
-
-    this.anims.create({
-      key: 'right',
-      frames: this.anims.generateFrameNumbers('player1', {
-        start: 24, end: 31
-      }),
-      frameRate: 10,
-      repeat: -1  // loop
-    });
-
-    this.anims.create({
-      key: 'down',
-      frames: this.anims.generateFrameNumbers('player1', {
-        start: 32, end: 35
-      }),
-      frameRate: 20,
-    });
-
-    this.anims.create({
-      key: 'downUp',
-      frames: this.anims.generateFrameNumbers('player1', {
-        start: 36, end: 37
-      }),
-      frameRate: 10,
     });
 
     this.anims.create({
       key: 'jump',
       frames: this.anims.generateFrameNumbers('player1', {
-        start: 40, end: 43
+        start: 43, end: 43
       }),
       frameRate: 10,
-      repeat: -1  // loop
+      repeat: -1,  // loop
     });
 
     this.anims.create({
       key: 'fall',
       frames: this.anims.generateFrameNumbers('player1', {
-        start: 44, end: 45
-      }),
-      frameRate: 10,
-      repeat: -1  // loop
-    });
-
-    this.anims.create({
-      key: 'teleportGo',
-      frames: this.anims.generateFrameNumbers('player1', {
-        start: 48, end: 51
-      }),
-      frameRate: 10,
-    });
-
-    this.anims.create({
-      key: 'teleportReturn',
-      frames: this.anims.generateFrameNumbers('player1', {
-        start: 48, end: 51
+        start: 45, end: 45
       }),
       frameRate: 10,
       repeat: -1  // loop
@@ -134,11 +105,18 @@ export default class level01 extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers('player1', {
         start: 64, end: 71
       }),
-      frameRate: 10,
-      repeat: -1  // loop
+      frameRate: 20,
+      delay: 20,
     });
 
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.keyA= this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+    this.keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+
 
   }
 
@@ -150,26 +128,147 @@ export default class level01 extends Phaser.Scene {
       });
     }
 
+    if (this.P1Jump === true){
+      this.P1JumpDelay ++;
+    }
 
-    if (this.cursors.left.isDown) {
-      this.player1.setVelocityX(-160);
-      this.player1.anims.play('left', true);
-    } else if (this.cursors.right.isDown) {
-      this.player1.setVelocityX(160);
-      this.player1.anims.play('right', true);
-    } else if (this.cursors.up.isDown) {
-      this.player1.anims.play('teleportGo', true);
-      this.player1.setVelocityY(-500);
-      //this.player.setPosition(this.player.positionX+20, this.player.positionY)
+    // Jump Idle
+    if (this.cursors.up.isDown && this.player1.body.blocked.down) {
+      
+      this.player1.setVelocityY(-350);
+      this.P1Jump == true;
 
-    } else if (this.cursors.down.isDown) {
-      setTimeout(3000)
-      this.player1.anims.play('down', true);
+    } else if ( // Attack Left
+      this.keyENTER.isDown &&
+      this.cursors.down.isUp &&
+      this.player1.body.blocked.down &&
+      this.P1Position === "left"
+    ) {
 
-
-    } else {
+      this.player1.setFlipX(true);
       this.player1.setVelocityX(0);
-      this.player1.anims.play('idle', true);
+      this.player1.anims.play("attack", true);
+      
+    } else if ( // Attack Right
+      this.keyENTER.isDown &&
+      this.cursors.down.isUp &&
+      this.player1.body.blocked.down &&
+      this.P1Position === "right"
+    ) {
+
+      this.player1.setFlipX(false);
+      this.player1.setVelocityX(0);
+      this.player1.anims.play("attack", true);
+
+    } else if ( // Jump Left
+
+      this.player1.body.velocity.y < 0 &&
+      this.cursors.left.isUp &&
+      this.cursors.right.isUp &&
+      this.P1Position === "left"
+
+    ) {
+
+      this.player1.setFlipX(true);
+      this.player1.setVelocityX(0);
+      this.player1.anims.play("jump", true);
+
+    } else if ( // Jump Right
+      
+      this.player1.body.velocity.y < 0 &&
+      this.cursors.left.isUp &&
+      this.cursors.right.isUp &&
+      this.P1Position === "right"
+
+    ) {
+
+      this.player1.setFlipX(false);
+      this.player1.setVelocityX(0);
+      this.player1.anims.play("jump", true);
+
+    } else if (this.player1.body.velocity.y < 0 && this.cursors.left.isDown) { // Jump Left Move
+
+      this.player1.setFlipX(true);
+      this.player1.setVelocityX(-60);
+      this.player1.anims.play("jump", true);
+      this.P1Position = "left";
+
+    } else if (this.player1.body.velocity.y < 0 && this.cursors.right.isDown) { // Jump Right Move
+
+      this.player1.setFlipX(false);
+      this.player1.setVelocityX(60);
+      this.player1.anims.play("jump", true);
+      this.P1Position = "right";
+
+    } else if ( // Fall Left
+      
+      !this.player1.body.blocked.down &&
+      this.player1.body.velocity.y > 0 &&
+      this.cursors.left.isUp &&
+      this.P1Position === "left"
+
+    ) {
+
+      this.player1.setFlipX(true);
+      this.player1.setVelocityX(0);
+      this.player1.anims.play("fall", true);
+
+    } else if ( // Fall Right
+      
+      !this.player1.body.blocked.down &&
+      this.player1.body.velocity.y > 0 &&
+      this.cursors.right.isUp &&
+      this.P1Position === "right"
+
+    ) {
+
+      this.player1.setFlipX(false);
+      this.player1.setVelocityX(0);
+      this.player1.anims.play("fall", true);
+
+    } else if (this.cursors.left.isDown && this.player1.body.blocked.down) { //Run Left
+
+      this.player1.setFlipX(true);
+      this.player1.setVelocityX(-60);
+      this.player1.anims.play("run", true);
+      this.P1Position = "left";
+
+    } else if (this.cursors.right.isDown && this.player1.body.blocked.down) { //Run Right
+
+      this.player1.setFlipX(false);
+      this.player1.setVelocityX(60);
+      this.player1.anims.play("run", true);
+      this.P1Position = "right";
+
+    } else if ( // Idle Left
+      
+      this.player1.body.blocked.down && 
+      this.cursors.right.isUp &&
+      this.cursors.left.isUp &&
+      this.keyENTER.isUp &&
+      this.cursors.down.isUp &&
+      this.P1Position === "left"
+
+    ) {
+
+      this.player1.setFlipX(true);
+      this.player1.setVelocityX(0);
+      this.player1.anims.play("idle", true);
+
+    } else if ( // Idle Right
+      
+      this.player1.body.blocked.down &&
+      this.cursors.right.isUp &&
+      this.cursors.left.isUp &&
+      this.keyENTER.isUp &&
+      this.cursors.down.isUp &&
+      this.P1Position === "right"
+
+    ) {
+
+      this.player1.setFlipX(false);
+      this.player1.setVelocityX(0);
+      this.player1.anims.play("idle", true);
     }
 
     if (this.cursors.up.isDown && this.player1.body.touching.down) {
@@ -179,4 +278,4 @@ export default class level01 extends Phaser.Scene {
   }
 }
 
-// 
+// https://github.com/piyinyang/yinyang/blob/master/GameScene.js
