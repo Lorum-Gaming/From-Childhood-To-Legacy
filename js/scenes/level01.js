@@ -203,7 +203,23 @@ export default class level01 extends Phaser.Scene {
       this.player1.anims.play("jump", true);
       this.P1Position = "right";
 
-    } else if ( // Fall Left
+    } else if (this.player1.body.velocity.y > 0 && this.cursors.left.isDown) { // Fall Left Move
+
+      this.player1.setFlipX(true);
+      this.player1.setVelocityX(-60);
+      this.player1.anims.play("fall", true);
+      this.P1Position = "left";
+
+    } else if (this.player1.body.velocity.y > 0 && this.cursors.right.isDown) { // Fall Right Move
+
+      this.player1.setFlipX(false);
+      this.player1.setVelocityX(60);
+      this.player1.anims.play("fall", true);
+      this.P1Position = "right";
+
+    }
+    
+    else if ( // Fall Left
       
       !this.player1.body.blocked.down &&
       this.player1.body.velocity.y > 0 &&
