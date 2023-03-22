@@ -4,6 +4,7 @@ export default class level01 extends Phaser.Scene {
     this.map;
     this.tileset;
     this.platforms;
+    this.cameras;
 
     // Variables Player1
     this.player1;
@@ -117,7 +118,9 @@ export default class level01 extends Phaser.Scene {
     this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
     this.keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
-
+    this.cameras.main.setBounds(0, 0, 4096, 512);
+    this.physics.world.setBounds(0, 0, 4096, 512);
+    this.cameras.main.startFollow(this.player1);
   }
 
   update() {
