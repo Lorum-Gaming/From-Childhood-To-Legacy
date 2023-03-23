@@ -5,12 +5,14 @@ export default class level01 extends Phaser.Scene {
     this.tileset;
     this.platforms;
     this.cameras;
+    this.coinText;
 
     // Variables Player1
     this.player1;
     this.P1Jump = false;
     this.P1JumpDelay = 0;
     this.P1Position = "right"; // Player turn right or left
+    this.P1Coins = 0;
 
     // Keys
     this.cursors;
@@ -21,6 +23,8 @@ export default class level01 extends Phaser.Scene {
     this.keyP;
     this.keyENTER;
 
+    // Audio
+    this.musicBackground;
 
   }
 
@@ -33,9 +37,14 @@ export default class level01 extends Phaser.Scene {
     this.load.tilemapTiledJSON("map", "../../assets/level1.json");
 
     this.load.spritesheet('player1', '../../assets/characters/player1/player1.png', { frameWidth: 32, frameHeight: 32 });
+
+    this.load.audio("musicBackground", "../../assets/audio/musicBackground.mp3")
   }
 
   create() {
+
+    this.musicBackground = this.sound.add("musicBackground");
+    this.musicBackground.play();
 
     this.add.image(400, 225, "backgroundLevel01", 0);
 
@@ -57,12 +66,7 @@ export default class level01 extends Phaser.Scene {
     /*
       Tasks
         -> Action one time with time 
-        -> Animation Reverse (fazer no tileset)
         -> Dash (princesas perdidas) 
-        -> Tiles collider (collide)
-        -> Reset Background in Scenes () 
-        
-        Descendente
     */
 
     this.anims.create({
@@ -87,6 +91,7 @@ export default class level01 extends Phaser.Scene {
       key: 'jump',
       frames: this.anims.generateFrameNumbers('player1', {
         start: 43, end: 43
+        
       }),
       frameRate: 10,
       repeat: -1,  // loop
@@ -110,6 +115,7 @@ export default class level01 extends Phaser.Scene {
       delay: 20,
     });
 
+    // Add Cursors
     this.cursors = this.input.keyboard.createCursorKeys();
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.keyA= this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -118,9 +124,19 @@ export default class level01 extends Phaser.Scene {
     this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
     this.keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
+
+    // Add Camera
     this.cameras.main.setBounds(0, 0, 4096, 512);
     this.physics.world.setBounds(0, 0, 4096, 512);
     this.cameras.main.startFollow(this.player1);
+
+    // Add coins counter
+    this.coinText = this.add.text(16, 16, `Coins: ${this.P1Coins}`, {
+      fontSize: '24px',
+      fill: "#000"
+    })
+
+    this.coinText.setScrollFactor(0); // Fixe in Screen
   }
 
   update() {
@@ -130,7 +146,7 @@ export default class level01 extends Phaser.Scene {
         player: this.game.socket.id,
       });
     }
-
+    
     if (this.P1Jump === true){
       this.P1JumpDelay ++;
     }
