@@ -6,16 +6,16 @@ export default class menuScene extends Phaser.Scene {
 
     preload () {
         this.load.image("backgroundImage", "../../assets/backgroundMenu.png");
-        alert('Enter in menuScene');
     }
 
     create() {
-        this.button = this.add.image(400, 225, "backgroundImage", 0)
+        this.button = this.add.image(400, 225, "backgroundImage")
             .setInteractive()
 
         this.button.on(
             "pointerdown",
             function () {
+                this.button.destroy();
                 this.game.scene.start("serverScene");
             },
             this

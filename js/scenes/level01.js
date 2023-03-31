@@ -14,6 +14,17 @@ export default class level01 extends Phaser.Scene {
     this.P1Position = "right"; // Player turn right or left
     this.P1Coins = 0;
 
+    this.P1Force = 10;
+    this.P1Resistence = 1;
+    this.P1AttackSpeed = 1;
+    this.P1Agility = 160;
+    this.P1Life = 100;
+    this.P1LifeMax = 150;
+
+    this.P1LifeText;
+    this.P1LifeBox;
+    this.P1LifeMaxBox;
+
     // Keys
     this.cursors;
     this.keyW;
@@ -43,7 +54,10 @@ export default class level01 extends Phaser.Scene {
 
   create() {
 
-    this.musicBackground = this.sound.add("musicBackground");
+    this.musicBackground = this.sound.add("musicBackground", {
+      volume: 0.2,
+    });
+
     this.musicBackground.play();
 
     this.add.image(400, 225, "backgroundLevel01", 0);
@@ -130,12 +144,22 @@ export default class level01 extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, 4096, 512);
     this.cameras.main.startFollow(this.player1);
 
+    this.P1LifeMaxBox = this.add.rectangle(100, 24, this.P1LifeMax, 15, 0x000000).setScrollFactor(0);
+    this.P1LifeBox = this.add.rectangle(75, 24, this.P1Life, 15, 0x008800).setScrollFactor(0);
+  
+    // Add life counter
+    this.P1LifeText = this.add.text(70, 17.5, `${this.P1Life} / ${this.P1LifeMax}`, {
+      fontSize: '12px',
+      fill: "#fff"
+    })
+
     // Add coins counter
-    this.coinText = this.add.text(16, 16, `Coins: ${this.P1Coins}`, {
+    this.coinText = this.add.text(650, 20, `Coins: ${this.P1Coins}`, {
       fontSize: '24px',
       fill: "#000"
     })
 
+    this.P1LifeText.setScrollFactor(0); // Fixe in Screen
     this.coinText.setScrollFactor(0); // Fixe in Screen
   }
 
@@ -146,15 +170,11 @@ export default class level01 extends Phaser.Scene {
         player: this.game.socket.id,
       });
     }
-    
-    if (this.P1Jump === true){
-      this.P1JumpDelay ++;
-    }
 
     // Jump Idle
     if (this.cursors.up.isDown && this.player1.body.blocked.down) {
       
-      this.player1.setVelocityY(-350);
+      this.player1.setVelocityY(-250);
       this.P1Jump == true;
 
     } else if ( // Attack Left
@@ -162,6 +182,7 @@ export default class level01 extends Phaser.Scene {
       this.cursors.down.isUp &&
       this.player1.body.blocked.down &&
       this.P1Position === "left"
+
     ) {
 
       this.player1.setFlipX(true);
@@ -208,28 +229,28 @@ export default class level01 extends Phaser.Scene {
     } else if (this.player1.body.velocity.y < 0 && this.cursors.left.isDown) { // Jump Left Move
 
       this.player1.setFlipX(true);
-      this.player1.setVelocityX(-60);
+      this.player1.setVelocityX(- this.P1Agility);
       this.player1.anims.play("jump", true);
       this.P1Position = "left";
 
     } else if (this.player1.body.velocity.y < 0 && this.cursors.right.isDown) { // Jump Right Move
 
       this.player1.setFlipX(false);
-      this.player1.setVelocityX(60);
+      this.player1.setVelocityX(this.P1Agility);
       this.player1.anims.play("jump", true);
       this.P1Position = "right";
 
     } else if (this.player1.body.velocity.y > 0 && this.cursors.left.isDown) { // Fall Left Move
 
       this.player1.setFlipX(true);
-      this.player1.setVelocityX(-60);
+      this.player1.setVelocityX(- this.P1Agility);
       this.player1.anims.play("fall", true);
       this.P1Position = "left";
 
     } else if (this.player1.body.velocity.y > 0 && this.cursors.right.isDown) { // Fall Right Move
 
       this.player1.setFlipX(false);
-      this.player1.setVelocityX(60);
+      this.player1.setVelocityX(this.P1Agility);
       this.player1.anims.play("fall", true);
       this.P1Position = "right";
 
@@ -264,14 +285,14 @@ export default class level01 extends Phaser.Scene {
     } else if (this.cursors.left.isDown && this.player1.body.blocked.down) { //Run Left
 
       this.player1.setFlipX(true);
-      this.player1.setVelocityX(-60);
+      this.player1.setVelocityX(- this.P1Agility);
       this.player1.anims.play("run", true);
       this.P1Position = "left";
 
     } else if (this.cursors.right.isDown && this.player1.body.blocked.down) { //Run Right
 
       this.player1.setFlipX(false);
-      this.player1.setVelocityX(60);
+      this.player1.setVelocityX(this.P1Agility);
       this.player1.anims.play("run", true);
       this.P1Position = "right";
 
