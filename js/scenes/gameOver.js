@@ -1,22 +1,22 @@
-export default class menuScene extends Phaser.Scene {
+export default class gameOver extends Phaser.Scene {
     constructor() {
-        super("menuScene");
+        super("gameOver");
         this.button;
     }
 
     preload () {
-        this.load.image("backgroundImage", "../../assets/screens/backgroundMenu.png");
+        this.load.image("gameOverImage", "../../assets/screens/gameOver.png");
     }
 
     create() {
-        this.button = this.add.image(400, 225, "backgroundImage")
+        this.button = this.add.image(400, 225, "gameOverImage")
             .setInteractive()
 
         this.button.on(
             "pointerdown",
             function () {
                 this.button.destroy();
-                this.game.scene.start("serverScene");
+                this.game.scene.start("menuScene");
             },
             this
         )
@@ -25,7 +25,7 @@ export default class menuScene extends Phaser.Scene {
     update() {
         if (this.game.socket.connected) {
             this.game.socket.emit("scene", {
-                scene: 1,
+                scene: 4,
                 player: this.game.socket.id,
             });
         }

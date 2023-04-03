@@ -8,27 +8,22 @@ export default class serverScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("backgroundServer", "../../assets/backgroundServer.png");
+    this.load.image("backgroundServer", "../../assets/screens/backgroundServer.png");
 
   }
 
   create() {
-    this.add.image(400, 225, "backgroundServer");
+    this.button = this.add.image(400, 225, "backgroundServer")
+            .setInteractive()
 
-    /*this.serverButton01 = this.add
-        .image(100, 225, "server01", 0)
-        .setInteractive();
-
-    this.serverButton01.on(
-      "pointerdown",
-      function () {
-        alert("Server 01");
-        this.game.scene.start("level01");
-      },
-
-      this
-    );*/
-
+        this.button.on(
+            "pointerdown",
+            function () {
+                this.button.destroy();
+                this.game.scene.start("level01");
+            },
+            this
+        )
   }
 
   update() {
