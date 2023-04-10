@@ -25,6 +25,24 @@ export default class level01 extends Phaser.Scene {
     this.P1LifeBox;
     this.P1LifeMaxBox;
 
+    // Variables Player2
+    this.player2;
+    this.P2Jump = false;
+    this.P2JumpDelay = 0;
+    this.P2Position = "right"; // Player turn right or left
+    this.P2Coins = 0;
+
+    this.P2Force = 10;
+    this.P2Resistence = 1;
+    this.P2AttackSpeed = 1;
+    this.P2Agility = 160;
+    this.P2Life = 100;
+    this.P2LifeMax = 150;
+
+    this.P2LifeText;
+    this.P2LifeBox;
+    this.P2LifeMaxBox;
+
     // Keys
     this.cursors;
     this.keyW;
@@ -48,6 +66,7 @@ export default class level01 extends Phaser.Scene {
     this.load.tilemapTiledJSON("map", "../../assets/level1.json");
 
     this.load.spritesheet('player1', '../../assets/characters/player1/player1.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('player2', '../../assets/characters/player2/player2.png', { frameWidth: 32, frameHeight: 32 });
 
     this.load.audio("musicBackground", "../../assets/audio/musicBackground.mp3")
   }
@@ -72,10 +91,13 @@ export default class level01 extends Phaser.Scene {
     this.platforms.setCollisionByProperty({ collides: true });
 
     this.player1 = this.physics.add.sprite(100, 50, 'player1');
+    this.player2 = this.physics.add.sprite(100, 50, 'player2');
     
     this.player1.setCollideWorldBounds(true);
+    this.player2.setCollideWorldBounds(true);
 
     this.physics.add.collider(this.player1, this.platforms, null, null, this);
+    this.physics.add.collider(this.player2, this.platforms, null, null, this);
     
     /*
       Tasks
