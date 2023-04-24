@@ -6,6 +6,13 @@ export default class level01 extends Phaser.Scene {
     this.platforms;
     this.cameras;
     this.coinText;
+    this.isKeyboard = false;
+
+    // Interface
+    this.buttonLeft;
+    this.buttonRight;
+    this.buttonUp;
+    this.buttonLeft;
 
     // Variables Player1
     this.player1;
@@ -58,7 +65,7 @@ export default class level01 extends Phaser.Scene {
   }
 
   preload() {
-    // alert("Enter in Level 01");
+
     this.load.image("backgroundLevel01", "../../assets/backgroundLevel01.png");
   
     this.load.image("tiles", "../../assets/tiles.png");
@@ -68,7 +75,12 @@ export default class level01 extends Phaser.Scene {
     this.load.spritesheet('player1', '../../assets/characters/player1/player1.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('player2', '../../assets/characters/player2/player2.png', { frameWidth: 32, frameHeight: 32 });
 
-    this.load.audio("musicBackground", "../../assets/audio/musicBackground.mp3")
+    this.load.spritesheet("buttonUp", "../../assets/interface/buttonUp.png", { frameWidth: 64,frameHeight: 64 });
+    this.load.spritesheet("buttonDown", "../../assets/interface/buttonDown.png", { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet("buttonLeft", "../../assets/interface/buttonLeft.png", { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet("buttonRight", "../../assets/interface/buttonRight.png", { frameWidth: 64, frameHeight: 64 });
+
+    this.load.audio("musicBackground", "../../assets/audio/musicBackground.mp3");
   }
 
   create() {
@@ -193,166 +205,234 @@ export default class level01 extends Phaser.Scene {
       });
     }
 
-    // Jump Idle
-    if (this.cursors.up.isDown && this.player1.body.blocked.down) {
+    if (this.isKeyboard) {
+
+      // Jump Idle
+      if (this.cursors.up.isDown && this.player1.body.blocked.down) {
+        
+        this.player1.setVelocityY(-250);
+        this.P1Jump == true;
+
+      } else if ( // Attack Left
+        this.keyENTER.isDown &&
+        this.cursors.down.isUp &&
+        this.player1.body.blocked.down &&
+        this.P1Position === "left"
+
+      ) {
+
+        this.player1.setFlipX(true);
+        this.player1.setVelocityX(0);
+        this.player1.anims.play("attack", true);
+        
+      } else if ( // Attack Right
+        this.keyENTER.isDown &&
+        this.cursors.down.isUp &&
+        this.player1.body.blocked.down &&
+        this.P1Position === "right"
+      ) {
+
+        this.player1.setFlipX(false);
+        this.player1.setVelocityX(0);
+        this.player1.anims.play("attack", true);
+
+      } else if ( // Jump Left
+
+        this.player1.body.velocity.y < 0 &&
+        this.cursors.left.isUp &&
+        this.cursors.right.isUp &&
+        this.P1Position === "left"
+
+      ) {
+
+        this.player1.setFlipX(true);
+        this.player1.setVelocityX(0);
+        this.player1.anims.play("jump", true);
+
+      } else if ( // Jump Right
+        
+        this.player1.body.velocity.y < 0 &&
+        this.cursors.left.isUp &&
+        this.cursors.right.isUp &&
+        this.P1Position === "right"
+
+      ) {
+
+        this.player1.setFlipX(false);
+        this.player1.setVelocityX(0);
+        this.player1.anims.play("jump", true);
+
+      } else if (this.player1.body.velocity.y < 0 && this.cursors.left.isDown) { // Jump Left Move
+
+        this.player1.setFlipX(true);
+        this.player1.setVelocityX(- this.P1Agility);
+        this.player1.anims.play("jump", true);
+        this.P1Position = "left";
+
+      } else if (this.player1.body.velocity.y < 0 && this.cursors.right.isDown) { // Jump Right Move
+
+        this.player1.setFlipX(false);
+        this.player1.setVelocityX(this.P1Agility);
+        this.player1.anims.play("jump", true);
+        this.P1Position = "right";
+
+      } else if (this.player1.body.velocity.y > 0 && this.cursors.left.isDown) { // Fall Left Move
+
+        this.player1.setFlipX(true);
+        this.player1.setVelocityX(- this.P1Agility);
+        this.player1.anims.play("fall", true);
+        this.P1Position = "left";
+
+      } else if (this.player1.body.velocity.y > 0 && this.cursors.right.isDown) { // Fall Right Move
+
+        this.player1.setFlipX(false);
+        this.player1.setVelocityX(this.P1Agility);
+        this.player1.anims.play("fall", true);
+        this.P1Position = "right";
+
+      }
       
-      this.player1.setVelocityY(-250);
-      this.P1Jump == true;
+      else if ( // Fall Left
+        
+        !this.player1.body.blocked.down &&
+        this.player1.body.velocity.y > 0 &&
+        this.cursors.left.isUp &&
+        this.P1Position === "left"
 
-    } else if ( // Attack Left
-      this.keyENTER.isDown &&
-      this.cursors.down.isUp &&
-      this.player1.body.blocked.down &&
-      this.P1Position === "left"
+      ) {
 
-    ) {
+        this.player1.setFlipX(true);
+        this.player1.setVelocityX(0);
+        this.player1.anims.play("fall", true);
 
-      this.player1.setFlipX(true);
-      this.player1.setVelocityX(0);
-      this.player1.anims.play("attack", true);
-      
-    } else if ( // Attack Right
-      this.keyENTER.isDown &&
-      this.cursors.down.isUp &&
-      this.player1.body.blocked.down &&
-      this.P1Position === "right"
-    ) {
+      } else if ( // Fall Right
+        
+        !this.player1.body.blocked.down &&
+        this.player1.body.velocity.y > 0 &&
+        this.cursors.right.isUp &&
+        this.P1Position === "right"
 
-      this.player1.setFlipX(false);
-      this.player1.setVelocityX(0);
-      this.player1.anims.play("attack", true);
+      ) {
 
-    } else if ( // Jump Left
+        this.player1.setFlipX(false);
+        this.player1.setVelocityX(0);
+        this.player1.anims.play("fall", true);
 
-      this.player1.body.velocity.y < 0 &&
-      this.cursors.left.isUp &&
-      this.cursors.right.isUp &&
-      this.P1Position === "left"
+      } else if (this.cursors.left.isDown && this.player1.body.blocked.down) { //Run Left
 
-    ) {
+        this.player1.setFlipX(true);
+        this.player1.setVelocityX(- this.P1Agility);
+        this.player1.anims.play("run", true);
+        this.P1Position = "left";
 
-      this.player1.setFlipX(true);
-      this.player1.setVelocityX(0);
-      this.player1.anims.play("jump", true);
+      } else if (this.cursors.right.isDown && this.player1.body.blocked.down) { //Run Right
 
-    } else if ( // Jump Right
-      
-      this.player1.body.velocity.y < 0 &&
-      this.cursors.left.isUp &&
-      this.cursors.right.isUp &&
-      this.P1Position === "right"
+        this.player1.setFlipX(false);
+        this.player1.setVelocityX(this.P1Agility);
+        this.player1.anims.play("run", true);
+        this.P1Position = "right";
 
-    ) {
+      } else if ( // Idle Left
+        
+        this.player1.body.blocked.down && 
+        this.cursors.right.isUp &&
+        this.cursors.left.isUp &&
+        this.keyENTER.isUp &&
+        this.cursors.down.isUp &&
+        this.P1Position === "left"
 
-      this.player1.setFlipX(false);
-      this.player1.setVelocityX(0);
-      this.player1.anims.play("jump", true);
+      ) {
 
-    } else if (this.player1.body.velocity.y < 0 && this.cursors.left.isDown) { // Jump Left Move
+        this.player1.setFlipX(true);
+        this.player1.setVelocityX(0);
+        this.player1.anims.play("idle", true);
 
-      this.player1.setFlipX(true);
-      this.player1.setVelocityX(- this.P1Agility);
-      this.player1.anims.play("jump", true);
-      this.P1Position = "left";
+      } else if ( // Idle Right
+        
+        this.player1.body.blocked.down &&
+        this.cursors.right.isUp &&
+        this.cursors.left.isUp &&
+        this.keyENTER.isUp &&
+        this.cursors.down.isUp &&
+        this.P1Position === "right"
 
-    } else if (this.player1.body.velocity.y < 0 && this.cursors.right.isDown) { // Jump Right Move
+      ) {
 
-      this.player1.setFlipX(false);
-      this.player1.setVelocityX(this.P1Agility);
-      this.player1.anims.play("jump", true);
-      this.P1Position = "right";
+        this.player1.setFlipX(false);
+        this.player1.setVelocityX(0);
+        this.player1.anims.play("idle", true);
+      }
 
-    } else if (this.player1.body.velocity.y > 0 && this.cursors.left.isDown) { // Fall Left Move
+      if (this.cursors.up.isDown && this.player1.body.touching.down) {
+        this.player1.setVelocityY(-450);
+      }
 
-      this.player1.setFlipX(true);
-      this.player1.setVelocityX(- this.P1Agility);
-      this.player1.anims.play("fall", true);
-      this.P1Position = "left";
+    } else {
 
-    } else if (this.player1.body.velocity.y > 0 && this.cursors.right.isDown) { // Fall Right Move
+      // Interface
+      this.buttonRight = this.add
+        .sprite(175, 300, "buttonRight", 0)
+        .setInteractive()
+        .setScrollFactor(0)
 
-      this.player1.setFlipX(false);
-      this.player1.setVelocityX(this.P1Agility);
-      this.player1.anims.play("fall", true);
-      this.P1Position = "right";
+        .on("pointerover", () => {
+          this.buttonRight.setFrame(1);
 
-    }
-    
-    else if ( // Fall Left
-      
-      !this.player1.body.blocked.down &&
-      this.player1.body.velocity.y > 0 &&
-      this.cursors.left.isUp &&
-      this.P1Position === "left"
+          this.player1.setFlipX(false);
+          this.player1.setVelocityX(this.P1Agility);
+          this.player1.anims.play("run", true);
+          this.P1Position = "right";
+        })
 
-    ) {
+        .on("pointerout", () => {
+          this.buttonRight.setFrame(0);
 
-      this.player1.setFlipX(true);
-      this.player1.setVelocityX(0);
-      this.player1.anims.play("fall", true);
+          this.player1.setFlipX(false);
+          this.player1.setVelocityX(0);
+          this.player1.anims.play("idle", true);
+        });
 
-    } else if ( // Fall Right
-      
-      !this.player1.body.blocked.down &&
-      this.player1.body.velocity.y > 0 &&
-      this.cursors.right.isUp &&
-      this.P1Position === "right"
+      this.buttonLeft = this.add
+        .sprite(75, 300, "buttonLeft", 0)
+        .setInteractive()
+        .setScrollFactor(0)
 
-    ) {
+        .on("pointerover", () => {
+          this.buttonLeft.setFrame(1);
 
-      this.player1.setFlipX(false);
-      this.player1.setVelocityX(0);
-      this.player1.anims.play("fall", true);
+          this.player1.setFlipX(true);
+          this.player1.setVelocityX(- this.P1Agility);
+          this.player1.anims.play("run", true);
+          this.P1Position = "left";
+        })
+            
+        .on("pointerout", () => {
+          this.buttonLeft.setFrame(0);
 
-    } else if (this.cursors.left.isDown && this.player1.body.blocked.down) { //Run Left
+          this.player1.setFlipX(true);
+          this.player1.setVelocityX(0);
+          this.player1.anims.play("idle", true);
+        });
 
-      this.player1.setFlipX(true);
-      this.player1.setVelocityX(- this.P1Agility);
-      this.player1.anims.play("run", true);
-      this.P1Position = "left";
+        this.buttonUp = this.add
+        .sprite(500, 300, "buttonUp", 0)
+        .setInteractive()
+        .setScrollFactor(0)
 
-    } else if (this.cursors.right.isDown && this.player1.body.blocked.down) { //Run Right
+        .on("pointerover", () => {
+          this.buttonUp.setFrame(1);
 
-      this.player1.setFlipX(false);
-      this.player1.setVelocityX(this.P1Agility);
-      this.player1.anims.play("run", true);
-      this.P1Position = "right";
+          this.player1.setVelocityY(-200);
+        })
+            
+        .on("pointerout", () => {
+          this.buttonUp.setFrame(0);
 
-    } else if ( // Idle Left
-      
-      this.player1.body.blocked.down && 
-      this.cursors.right.isUp &&
-      this.cursors.left.isUp &&
-      this.keyENTER.isUp &&
-      this.cursors.down.isUp &&
-      this.P1Position === "left"
+         
+        });
 
-    ) {
-
-      this.player1.setFlipX(true);
-      this.player1.setVelocityX(0);
-      this.player1.anims.play("idle", true);
-
-    } else if ( // Idle Right
-      
-      this.player1.body.blocked.down &&
-      this.cursors.right.isUp &&
-      this.cursors.left.isUp &&
-      this.keyENTER.isUp &&
-      this.cursors.down.isUp &&
-      this.P1Position === "right"
-
-    ) {
-
-      this.player1.setFlipX(false);
-      this.player1.setVelocityX(0);
-      this.player1.anims.play("idle", true);
-    }
-
-    if (this.cursors.up.isDown && this.player1.body.touching.down) {
-      this.player1.setVelocityY(-450);
-    }
-
+        
+      }    
   }
 }
 
