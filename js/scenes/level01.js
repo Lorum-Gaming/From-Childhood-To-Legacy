@@ -406,15 +406,11 @@ export default class level01 extends Phaser.Scene {
         
       .on("pointerdown", () => {
         if (this.scale.isFullscreen) {
-
-          this.buttonScreen.setFrame(0);
           this.scale.stopFullscreen();
 
         } else {
-
-          this.buttonScreen.setFrame(1);
           this.scale.startFullscreen();
-          
+
         }
       })
       .setScrollFactor(0);
