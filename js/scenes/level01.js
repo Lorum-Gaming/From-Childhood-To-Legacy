@@ -41,11 +41,13 @@ export default class level01 extends Phaser.Scene {
     this.xpLife;
     this.xpVelocityAttack;
 
-    this.XpSound;
-
     // Coin
     this.coin;
 
+    // Sound
+    this.Level01Sound;
+    this.XpSound;
+    this.CoinSound;
   }
 
   preload() {
@@ -75,11 +77,15 @@ export default class level01 extends Phaser.Scene {
 
     this.load.spritesheet("coin", "../../assets/objects/coin.png", { frameWidth: 32, frameHeight: 32 });
 
+    this.load.audio("Level01Sound", "../../assets/sounds/Level01Sound.mp3");
     this.load.audio("XpSound", "../../assets/sounds/XpSound.mp3");
     this.load.audio("CoinSound", "../../assets/sounds/CoinSound.mp3");
   }
 
   create() {
+    this.Level01Sound = this.sound.add("Level01Sound");
+    this.Level01Sound.loop = true;
+    this.Level01Sound.play();
 
     // Add Map and Platforms
     
@@ -228,7 +234,7 @@ export default class level01 extends Phaser.Scene {
         start: 0,
         end: 6
       }),
-      frameRate: 16,
+      frameRate: 8,
       repeat: -1,
     })
   
