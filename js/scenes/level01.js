@@ -12,6 +12,8 @@ export default class level01 extends Phaser.Scene {
     this.buttonLeft;
     this.buttonRight;
     this.buttonUp;
+    this.buttonAttack;
+    this.buttonDash;
 
     // Variables Player1
     this.player1;
@@ -30,6 +32,14 @@ export default class level01 extends Phaser.Scene {
     // Variables Player2
     this.player2;
 
+    // XP
+    this.xpCdr;
+    this.xpDamage;
+    this.xpResistance;
+    this.xpVelocity;
+    this.xpLife;
+    this.xpVelocityAttack;
+
   }
 
   preload() {
@@ -43,9 +53,18 @@ export default class level01 extends Phaser.Scene {
     this.load.spritesheet('player1', '../../assets/characters/player1/player1.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('player2', '../../assets/characters/player2/player2.png', { frameWidth: 32, frameHeight: 32 });
 
-    this.load.spritesheet("buttonUp", "../../assets/interface/buttonUp.png", { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet("buttonLeft", "../../assets/interface/buttonLeft.png", { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet("buttonRight", "../../assets/interface/buttonRight.png", { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet("buttonLeft", "../../assets/interface/buttonLeft.png", { frameWidth: 48, frameHeight: 48 });
+    this.load.spritesheet("buttonRight", "../../assets/interface/buttonRight.png", { frameWidth: 48, frameHeight: 48 });
+    this.load.spritesheet("buttonUp", "../../assets/interface/buttonJump.png", { frameWidth: 48, frameHeight: 48 });
+    this.load.spritesheet("buttonAttack", "../../assets/interface/buttonAttack.png", { frameWidth: 48, frameHeight: 48 });
+    this.load.spritesheet("buttonDash", "../../assets/interface/buttonDash.png", { frameWidth: 48, frameHeight: 48 });
+
+    this.load.spritesheet("xpCdr", "../../assets/objects/xpCdr.png", { frameWidth: 16, frameHeight: 16 });
+    this.load.spritesheet("xpDamage", "../../assets/objects/xpDamage.png", { frameWidth: 16, frameHeight: 16 });
+    this.load.spritesheet("xpResistance", "../../assets/objects/xpResistance.png", { frameWidth: 16, frameHeight: 16 });
+    this.load.spritesheet("xpVelocity", "../../assets/objects/xpVelocity.png", { frameWidth: 16, frameHeight: 16 });
+    this.load.spritesheet("xpLife", "../../assets/objects/xpLife.png", { frameWidth: 16, frameHeight: 16 });
+    this.load.spritesheet("xpVelocityAttack", "../../assets/objects/xpVelocityAttack.png", { frameWidth: 16, frameHeight: 16 });
   }
 
   create() {
@@ -61,20 +80,12 @@ export default class level01 extends Phaser.Scene {
     this.background = this.map.createStaticLayer("bg", this.backgroundTileset, 0, 0);
     this.floor = this.map.createStaticLayer("chao", this.floorTileset, 0, 0);
     this.obstacle = this.map.createStaticLayer("obstaculo", this.obstacleTileset, 0, 0)
-    
-    this.floor = this.map.createLayer("chao", this.floorTileset, 0, 0);
-    this.obstacle = this.map.createLayer("obstaculo", this.obstacleTileset, 0, 0);
-
+  
     this.floor.setCollisionByProperty({ colide: true });
     this.obstacle.setCollisionByProperty({ colide: true });
 
     this.player1 = this.physics.add.sprite(100, 50, 'player1');
     this.player2 = this.physics.add.sprite(100, 50, 'player2');
-    
-    this.player1.setCollideWorldBounds(true);
-
-    this.physics.add.collider(this.player1, this.floor, null, null, this);
-    this.physics.add.collider(this.player1, this.obstacle, null, null, this);
 
     this.anims.create({
       key: 'idle',
@@ -118,26 +129,122 @@ export default class level01 extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers('player1', {
         start: 64, end: 71
       }),
+      frameRate: 10,
+    });
+
+    this.anims.create({
+      key: 'dash',
+      frames: this.anims.generateFrameNumbers('player1', {
+        start: 64, end: 71
+      }),
       frameRate: 20,
       delay: 20,
     });
 
+    this.xpCdr = this.physics.add.sprite(200, 400, "xpCdr");
+    this.xpDamage = this.physics.add.sprite(250, 400, "xpDamage");
+    this.xpResistance = this.physics.add.sprite(300, 400, "xpResistance");
+    this.xpVelocity = this.physics.add.sprite(350, 400, "xpVelocity");
+    this.xpLife = this.physics.add.sprite(400, 400, "xpLife");
+    this.xpVelocityAttack = this.physics.add.sprite(450, 400, "xpVelocityAttack");
+
+    this.anims.create({
+      key: "xpCdr",
+      frames: this.anims.generateFrameNumbers("xpCdr", {
+        start: 0,
+        end: 11
+      }),
+      frameRate: 16,
+      repeat: -1,
+    })
+
+    this.anims.create({
+      key: "xpDamage",
+      frames: this.anims.generateFrameNumbers("xpDamage", {
+        start: 0,
+        end: 11
+      }),
+      frameRate: 16,
+      repeat: -1,
+    })
+
+    this.anims.create({
+      key: "xpResistance",
+      frames: this.anims.generateFrameNumbers("xpResistance", {
+        start: 0,
+        end: 11
+      }),
+      frameRate: 16,
+      repeat: -1,
+    })
+
+    this.anims.create({
+      key: "xpVelocity",
+      frames: this.anims.generateFrameNumbers("xpVelocity", {
+        start: 0,
+        end: 11
+      }),
+      frameRate: 16,
+      repeat: -1,
+    })
+
+    this.anims.create({
+      key: "xpLife",
+      frames: this.anims.generateFrameNumbers("xpLife", {
+        start: 0,
+        end: 11
+      }),
+      frameRate: 16,
+      repeat: -1,
+    })
+
+    this.anims.create({
+      key: "xpVelocityAttack",
+      frames: this.anims.generateFrameNumbers("xpVelocityAttack", {
+        start: 0,
+        end: 11
+      }),
+      frameRate: 16,
+      repeat: -1,
+    })
+
+    this.xpCdr.anims.play("xpCdr")
+    this.xpDamage.anims.play("xpDamage")
+    this.xpResistance.anims.play("xpResistance")
+    this.xpVelocity.anims.play("xpVelocity")
+    this.xpLife.anims.play("xpLife")
+    this.xpVelocityAttack.anims.play("xpVelocityAttack")
+
+    this.player1.setCollideWorldBounds(true);
+
+    this.physics.add.collider(this.player1, this.floor, null, null, this);
+    this.physics.add.collider(this.player1, this.obstacle, null, null, this);
+
+    this.physics.add.collider(this.xpCdr, this.floor, null, null, this);
+    this.physics.add.collider(this.xpDamage, this.floor, null, null, this);
+    this.physics.add.collider(this.xpResistance, this.floor, null, null, this);
+    this.physics.add.collider(this.xpVelocity, this.floor, null, null, this);
+    this.physics.add.collider(this.xpLife, this.floor, null, null, this);
+    this.physics.add.collider(this.xpVelocityAttack, this.floor, null, null, this);
+
+    this.physics.add.collider(this.player1, this.xpCdr, this.collectXPCdr, null, this)
+    this.physics.add.collider(this.player1, this.xpDamage, this.collectXPDamage, null, this)
+    this.physics.add.collider(this.player1, this.xpResistance, this.collectxpResistance, null, this)
+    this.physics.add.collider(this.player1, this.xpVelocity, this.collectXPVelocity, null, this)
+    this.physics.add.collider(this.player1, this.xpLife, this.collectXPLife, null, this)
+    this.physics.add.collider(this.player1, this.xpVelocityAttack, this.collectXPVelocityAttack, null, this)
+
     // Add Camera
-    this.cameras.main.setBounds(0, 0, 4096, 512);
-    this.physics.world.setBounds(0, 0, 4096, 512);
+    this.cameras.main.setBounds(0, 0, 3072, 2048);
+    this.physics.world.setBounds(0, 0, 3072, 2048);
     this.cameras.main.startFollow(this.player1);
   }
 
   update() {
-    if (this.game.socket.connected) {
-      this.game.socket.emit("scene", {
-        scene: 3,
-        player: this.game.socket.id,
-      });
-    }
+
     // Interface
     this.buttonRight = this.add
-      .sprite(175, 300, "buttonRight", 0)
+      .sprite(175, 375, "buttonRight", 0)
       .setInteractive()
       .setScrollFactor(0)
 
@@ -159,7 +266,7 @@ export default class level01 extends Phaser.Scene {
       });
 
     this.buttonLeft = this.add
-      .sprite(75, 300, "buttonLeft", 0)
+      .sprite(75, 375, "buttonLeft", 0)
       .setInteractive()
       .setScrollFactor(0)
 
@@ -181,20 +288,104 @@ export default class level01 extends Phaser.Scene {
       });
 
     this.buttonUp = this.add
-      .sprite(500, 300, "buttonUp", 0)
+      .sprite(750, 375, "buttonUp", 0)
       .setInteractive()
       .setScrollFactor(0)
 
       .on("pointerover", () => {
         this.buttonUp.setFrame(1);
-
         this.player1.setVelocityY(-200);
+        this.player1.anims.play("jump", true);
       })
           
       .on("pointerout", () => {
         this.buttonUp.setFrame(0);
+        this.player1.anims.play("idle", true);
       });
       
+  
+this.buttonAttack = this.add.sprite(750, 315, "buttonAttack", 0)
+    .setInteractive()
+  .setScrollFactor(0)
+  
+    .on("pointerdown", () => {
+      // Stop any existing animations before playing the attack animation
+      this.player1.anims.stop();
+      this.player1.anims.play("attack", true);
+    })
+  
+    .on("pointerover", () => {
+      // Set the frame to the second frame of the button sprite on hover
+      this.buttonAttack.setFrame(1);
+    })
+  
+    .on("pointerout", () => {
+      // Set the frame back to the first frame of the button sprite on mouseout
+      this.buttonAttack.setFrame(0);
+      // Play the idle animation for the player character after the attack animation is done
+      this.player1.on("animationcomplete-attack", () => {
+        this.player1.anims.play("idle", true);
+      }, this);
+    });
 
+    this.buttonDash = this.add
+      .sprite(675, 375, "buttonDash", 0)
+      .setInteractive()
+      .setScrollFactor(0)
+
+      .on("pointerdown", () => {
+        // Check if the player is idle or on the ground before allowing a dash
+        if (this.player1.anims.currentAnim.key === "idle") {
+          // Set player velocity based on current direction
+          if (this.player1.flipX) {
+            this.player1.setVelocityX(-700);
+          } else {
+            this.player1.setVelocityX(700);
+          }
+          
+          // Play dash animation
+          this.player1.anims.play("dash", true);
+          
+          // Reset player velocity after 100ms
+          setTimeout(() => {
+            this.player1.setVelocityX(0);
+          }, 100);
+        }
+      })
+
+      .on("pointerover", () => {
+        this.buttonDash.setFrame(1);
+      })
+          
+      .on("pointerout", () => {
+        this.buttonDash.setFrame(0);
+        this.player1.anims.play("idle", true);
+      });
   }
+
+  collectXPCdr() {
+    this.xpCdr.disableBody(true, true);
+  }
+
+  collectXPDamage() {
+    this.xpDamage.disableBody(true, true);
+  }
+
+  collectxpResistance() {
+    this.xpResistance.disableBody(true, true);
+  }
+
+  collectXPVelocity() {
+    this.xpVelocity.disableBody(true, true);
+  }
+
+  collectXPLife() {
+    this.xpLife.disableBody(true, true);
+  }
+
+  collectXPVelocityAttack() {
+    this.xpVelocityAttack.disableBody(true, true);
+  }
+
+
 }
