@@ -14,6 +14,7 @@ export default class level01 extends Phaser.Scene {
     this.buttonUp;
     this.buttonAttack;
     this.buttonDash;
+    this.buttonScreen;
 
     // Variables Player1
     this.player1;
@@ -58,6 +59,7 @@ export default class level01 extends Phaser.Scene {
     this.load.spritesheet("buttonUp", "../../assets/interface/buttonJump.png", { frameWidth: 48, frameHeight: 48 });
     this.load.spritesheet("buttonAttack", "../../assets/interface/buttonAttack.png", { frameWidth: 48, frameHeight: 48 });
     this.load.spritesheet("buttonDash", "../../assets/interface/buttonDash.png", { frameWidth: 48, frameHeight: 48 });
+    this.load.spritesheet("buttonScreen", "../../assets/interface/buttonScreen.png", { frameWidth: 16, frameHeight: 16 });
 
     this.load.spritesheet("xpCdr", "../../assets/objects/xpCdr.png", { frameWidth: 16, frameHeight: 16 });
     this.load.spritesheet("xpDamage", "../../assets/objects/xpDamage.png", { frameWidth: 16, frameHeight: 16 });
@@ -242,6 +244,8 @@ export default class level01 extends Phaser.Scene {
 
   update() {
 
+    
+
     // Interface
     this.buttonRight = this.add
       .sprite(175, 375, "buttonRight", 0)
@@ -304,25 +308,24 @@ export default class level01 extends Phaser.Scene {
       });
       
   
-this.buttonAttack = this.add.sprite(750, 315, "buttonAttack", 0)
+    this.buttonAttack = this.add
+    .sprite(750, 315, "buttonAttack", 0)
     .setInteractive()
-  .setScrollFactor(0)
+    .setScrollFactor(0)
   
     .on("pointerdown", () => {
-      // Stop any existing animations before playing the attack animation
       this.player1.anims.stop();
       this.player1.anims.play("attack", true);
     })
   
     .on("pointerover", () => {
-      // Set the frame to the second frame of the button sprite on hover
       this.buttonAttack.setFrame(1);
     })
   
     .on("pointerout", () => {
-      // Set the frame back to the first frame of the button sprite on mouseout
+      
       this.buttonAttack.setFrame(0);
-      // Play the idle animation for the player character after the attack animation is done
+      
       this.player1.on("animationcomplete-attack", () => {
         this.player1.anims.play("idle", true);
       }, this);
@@ -334,19 +337,16 @@ this.buttonAttack = this.add.sprite(750, 315, "buttonAttack", 0)
       .setScrollFactor(0)
 
       .on("pointerdown", () => {
-        // Check if the player is idle or on the ground before allowing a dash
         if (this.player1.anims.currentAnim.key === "idle") {
-          // Set player velocity based on current direction
+          
           if (this.player1.flipX) {
             this.player1.setVelocityX(-700);
           } else {
             this.player1.setVelocityX(700);
           }
           
-          // Play dash animation
           this.player1.anims.play("dash", true);
-          
-          // Reset player velocity after 100ms
+        
           setTimeout(() => {
             this.player1.setVelocityX(0);
           }, 100);
@@ -361,6 +361,25 @@ this.buttonAttack = this.add.sprite(750, 315, "buttonAttack", 0)
         this.buttonDash.setFrame(0);
         this.player1.anims.play("idle", true);
       });
+
+      this.buttonScreen = this.add
+      .sprite(750, 50, "buttonScreen", 0)
+      .setInteractive()
+        
+      .on("pointerdown", () => {
+        if (this.scale.isFullscreen) {
+
+          this.buttonScreen.setFrame(0);
+          this.scale.stopFullscreen();
+
+        } else {
+
+          this.buttonScreen.setFrame(1);
+          this.scale.startFullscreen();
+          
+        }
+      })
+      .setScrollFactor(0);
   }
 
   collectXPCdr() {
