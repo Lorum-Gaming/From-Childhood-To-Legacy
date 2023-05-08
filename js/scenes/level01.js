@@ -251,7 +251,7 @@ export default class level01 extends Phaser.Scene {
     this.player1.setCollideWorldBounds(true);
 
     this.physics.add.collider(this.player1, this.floor, null, null, this);
-    this.physics.add.collider(this.player1, this.obstacle, null, null, this);
+    this.physics.add.collider(this.player1, this.obstacle, this.colliderObstacle, null, this);
 
     this.physics.add.collider(this.xpCdr, this.floor, null, null, this);
     this.physics.add.collider(this.xpDamage, this.floor, null, null, this);
@@ -455,5 +455,8 @@ export default class level01 extends Phaser.Scene {
     this.CoinSound.play();
   }
 
+  colliderObstacle() {
+    //alert("Player Die");
+  }
 
 }
