@@ -41,6 +41,11 @@ export default class level01 extends Phaser.Scene {
     this.xpLife;
     this.xpVelocityAttack;
 
+    this.XpSound;
+
+    // Coin
+    this.coin;
+
   }
 
   preload() {
@@ -67,6 +72,11 @@ export default class level01 extends Phaser.Scene {
     this.load.spritesheet("xpVelocity", "../../assets/objects/xpVelocity.png", { frameWidth: 16, frameHeight: 16 });
     this.load.spritesheet("xpLife", "../../assets/objects/xpLife.png", { frameWidth: 16, frameHeight: 16 });
     this.load.spritesheet("xpVelocityAttack", "../../assets/objects/xpVelocityAttack.png", { frameWidth: 16, frameHeight: 16 });
+
+    this.load.spritesheet("coin", "../../assets/objects/coin.png", { frameWidth: 32, frameHeight: 32 });
+
+    this.load.audio("XpSound", "../../assets/sounds/XpSound.mp3");
+    this.load.audio("CoinSound", "../../assets/sounds/CoinSound.mp3");
   }
 
   create() {
@@ -149,6 +159,8 @@ export default class level01 extends Phaser.Scene {
     this.xpVelocity = this.physics.add.sprite(350, 400, "xpVelocity");
     this.xpLife = this.physics.add.sprite(400, 400, "xpLife");
     this.xpVelocityAttack = this.physics.add.sprite(450, 400, "xpVelocityAttack");
+    
+    this.coin = this.physics.add.sprite(150, 400, "coin");
 
     this.anims.create({
       key: "xpCdr",
@@ -210,12 +222,25 @@ export default class level01 extends Phaser.Scene {
       repeat: -1,
     })
 
+    this.anims.create({
+      key: "coin",
+      frames: this.anims.generateFrameNumbers("coin", {
+        start: 0,
+        end: 6
+      }),
+      frameRate: 16,
+      repeat: -1,
+    })
+  
+
     this.xpCdr.anims.play("xpCdr")
     this.xpDamage.anims.play("xpDamage")
     this.xpResistance.anims.play("xpResistance")
     this.xpVelocity.anims.play("xpVelocity")
     this.xpLife.anims.play("xpLife")
     this.xpVelocityAttack.anims.play("xpVelocityAttack")
+
+    this.coin.anims.play("coin")
 
     this.player1.setCollideWorldBounds(true);
 
@@ -229,12 +254,19 @@ export default class level01 extends Phaser.Scene {
     this.physics.add.collider(this.xpLife, this.floor, null, null, this);
     this.physics.add.collider(this.xpVelocityAttack, this.floor, null, null, this);
 
+    this.physics.add.collider(this.coin, this.floor, null, null, this);
+
     this.physics.add.collider(this.player1, this.xpCdr, this.collectXPCdr, null, this)
     this.physics.add.collider(this.player1, this.xpDamage, this.collectXPDamage, null, this)
     this.physics.add.collider(this.player1, this.xpResistance, this.collectxpResistance, null, this)
     this.physics.add.collider(this.player1, this.xpVelocity, this.collectXPVelocity, null, this)
     this.physics.add.collider(this.player1, this.xpLife, this.collectXPLife, null, this)
     this.physics.add.collider(this.player1, this.xpVelocityAttack, this.collectXPVelocityAttack, null, this)
+
+    this.physics.add.collider(this.player1, this.coin, this.collectCoin, null, this)
+
+    this.XpSound = this.sound.add("XpSound");
+    this.CoinSound = this.sound.add("CoinSound");
 
     // Add Camera
     this.cameras.main.setBounds(0, 0, 3072, 2048);
@@ -384,26 +416,37 @@ export default class level01 extends Phaser.Scene {
 
   collectXPCdr() {
     this.xpCdr.disableBody(true, true);
+    this.XpSound.play();
   }
 
   collectXPDamage() {
     this.xpDamage.disableBody(true, true);
+    this.XpSound.play();
   }
 
   collectxpResistance() {
     this.xpResistance.disableBody(true, true);
+    this.XpSound.play();
   }
 
   collectXPVelocity() {
     this.xpVelocity.disableBody(true, true);
+    this.XpSound.play();
   }
 
   collectXPLife() {
     this.xpLife.disableBody(true, true);
+    this.XpSound.play();
   }
 
   collectXPVelocityAttack() {
     this.xpVelocityAttack.disableBody(true, true);
+    this.XpSound.play();
+  }
+
+  collectCoin() {
+    this.coin.disableBody(true, true);
+    this.CoinSound.play();
   }
 
 
