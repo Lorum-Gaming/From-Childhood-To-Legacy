@@ -278,11 +278,6 @@ export default class level01 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 3072, 2048);
     this.physics.world.setBounds(0, 0, 3072, 2048);
     this.cameras.main.startFollow(this.player1);
-  }
-
-  update() {
-
-    
 
     // Interface
     this.buttonRight = this.add
@@ -307,7 +302,7 @@ export default class level01 extends Phaser.Scene {
         this.player1.anims.play("idle", true);
       });
 
-    this.buttonLeft = this.add
+      this.buttonLeft = this.add
       .sprite(75, 375, "buttonLeft", 0)
       .setInteractive()
       .setScrollFactor(0)
@@ -329,7 +324,7 @@ export default class level01 extends Phaser.Scene {
         this.player1.anims.play("idle", true);
       });
 
-    this.buttonUp = this.add
+      this.buttonUp = this.add
       .sprite(750, 375, "buttonUp", 0)
       .setInteractive()
       .setScrollFactor(0)
@@ -344,32 +339,31 @@ export default class level01 extends Phaser.Scene {
         this.buttonUp.setFrame(0);
         this.player1.anims.play("idle", true);
       });
-      
-  
-    this.buttonAttack = this.add
-    .sprite(750, 315, "buttonAttack", 0)
-    .setInteractive()
-    .setScrollFactor(0)
-  
-    .on("pointerdown", () => {
-      this.player1.anims.stop();
-      this.player1.anims.play("attack", true);
-    })
-  
-    .on("pointerover", () => {
-      this.buttonAttack.setFrame(1);
-    })
-  
-    .on("pointerout", () => {
-      
-      this.buttonAttack.setFrame(0);
-      
-      this.player1.on("animationcomplete-attack", () => {
-        this.player1.anims.play("idle", true);
-      }, this);
-    });
+    
+      this.buttonAttack = this.add
+      .sprite(750, 315, "buttonAttack", 0)
+      .setInteractive()
+      .setScrollFactor(0)
+    
+      .on("pointerdown", () => {
+        this.player1.anims.stop();
+        this.player1.anims.play("attack", true);
+      })
+    
+      .on("pointerover", () => {
+        this.buttonAttack.setFrame(1);
+      })
+    
+      .on("pointerout", () => {
+        
+        this.buttonAttack.setFrame(0);
+        
+        this.player1.on("animationcomplete-attack", () => {
+          this.player1.anims.play("idle", true);
+        }, this);
+      });
 
-    this.buttonDash = this.add
+       this.buttonDash = this.add
       .sprite(675, 375, "buttonDash", 0)
       .setInteractive()
       .setScrollFactor(0)
@@ -414,6 +408,12 @@ export default class level01 extends Phaser.Scene {
         }
       })
       .setScrollFactor(0);
+      
+  }
+
+  update() {
+    
+
   }
 
   collectXPCdr() {
