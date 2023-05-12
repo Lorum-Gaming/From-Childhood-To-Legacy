@@ -1,33 +1,28 @@
 export default class menuScene extends Phaser.Scene {
-    constructor() {
-        super("menuScene");
-        this.button;
-    }
+  constructor() {
+    super("menuScene");
+    this.button;
+  }
 
-    preload () {
-        this.load.image("backgroundImage", "../../assets/screens/backgroundMenu.png");
-    }
+  preload() {
+    this.load.image(
+      "backgroundImage",
+      "../../assets/screens/backgroundMenu.png"
+    );
+  }
 
-    create() {
-        this.button = this.add.image(400, 225, "backgroundImage")
-            .setInteractive()
+  create() {
+    this.button = this.add.image(400, 225, "backgroundImage").setInteractive();
 
-        this.button.on(
-            "pointerdown",
-            function () {
-                this.button.destroy();
-                this.game.scene.start("serverScene");
-            },
-            this
-        )
-    };
+    this.button.on(
+      "pointerdown",
+      function () {
+        this.button.destroy();
+        this.game.scene.start("serverScene");
+      },
+      this
+    );
+  }
 
-    update() {
-        if (this.game.socket.connected) {
-            this.game.socket.emit("scene", {
-                scene: 1,
-                player: this.game.socket.id,
-            });
-        }
-    }
+  update() {}
 }

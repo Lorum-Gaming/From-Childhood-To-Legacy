@@ -16,7 +16,7 @@ class Game extends Phaser.Game {
     // WebSocket
     this.socket = io();
     this.socket.on("connect", () => {
-      this.socket.emit("enter-room", this.socket.id);
+      //this.socket.emit("enter-room", this.socket.id);
     });
     //
     // Scenes
@@ -28,7 +28,7 @@ class Game extends Phaser.Game {
     this.scene.add("gameOver", gameOver);
     this.scene.add("victory", victory);
 
-    this.scene.start("level01");
+    this.scene.start("menuScene");
   }
 }
 
