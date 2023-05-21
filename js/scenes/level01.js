@@ -30,9 +30,6 @@ export default class level01 extends Phaser.Scene {
     this.P1Life = 100;
     this.P1LifeMax = 150;
 
-    // Variables Player2
-    this.player2;
-
     // XP
     this.xpCdr;
     this.xpDamage;
@@ -167,10 +164,10 @@ export default class level01 extends Phaser.Scene {
 
     if (this.game.players.first === this.game.socket.id) {
       this.local = "player1";
-      this.player1 = this.physics.add.sprite(100, 50, this.local);
+      this.player1 = this.physics.add.sprite(100, 300, this.local);
 
       this.remoto = "player2";
-      this.player2 = this.physics.add.sprite(200, 50, this.local);
+      this.player2 = this.add.sprite(200, 50, this.local);
     } else {
       this.remoto = "player1";
       this.player2 = this.add.sprite(100, 50, this.remoto);
@@ -545,13 +542,98 @@ export default class level01 extends Phaser.Scene {
       })
       .setScrollFactor(0);
 
+    this.xps = [
+      {
+        x: 560,
+        y: 350,
+        type: "xpCdr",
+        objeto: undefined,
+      },
+      {
+        x: 100,
+        y: 400,
+        type: "xpCdr",
+        objeto: undefined,
+      },
+      {
+        x: 1500,
+        y: 1000,
+        type: "xpCdr",
+        objeto: undefined,
+      },
+      {
+        x: 650,
+        y: 800,
+        type: "xpCdr",
+        objeto: undefined,
+      },
+      {
+        x: 1820,
+        y: 500,
+        type: "xpCdr",
+        objeto: undefined,
+      },
+    ];
+
+    this.coins = [
+      {
+        x: 600,
+        y: 350,
+        objeto: undefined,
+      },
+      {
+        x: 150,
+        y: 400,
+        objeto: undefined,
+      },
+      {
+        x: 1550,
+        y: 1000,
+        objeto: undefined,
+      },
+      {
+        x: 700,
+        y: 800,
+        objeto: undefined,
+      },
+      {
+        x: 1870,
+        y: 500,
+        objeto: undefined,
+      },
+    ];
+
+    this.xps.forEach((item) => {
+      item = this.physics.add.sprite(item.x, item.y, item.type);
+      item.anims.play(`${item.type}`);
+      this.physics.add.collider(item, this.floor, null, null, this);
+      this.physics.add.collider(this.player1, item, this.collectXP, null, this);
+    });
+
+    this.coins.forEach((coin) => {
+      coin = this.physics.add.sprite(coin.x, coin.y, "coin");
+      coin.anims.play(`${coin.type}`);
+      this.physics.add.collider(coin, this.floor, null, null, this);
+      this.physics.add.collider(
+        this.player1,
+        coin,
+        this.collectCoin,
+        null,
+        this
+      );
+    });
+
     this.game.socket.on("state-notify", ({ frame, x, y }) => {
       this.player2.setFrame(frame);
       this.player2.x = x;
       this.player2.y = y;
     });
 
-    this.game.socket.on();
+    this.game.socket.on("xps-notify", (xps) => {
+      if (xps) {
+        this.cri;
+      }
+    });
   }
 
   update() {
@@ -565,44 +647,34 @@ export default class level01 extends Phaser.Scene {
 
     this.game.socket.emit("state-publish", this.game.room, {
       frame: frame,
-      x: this.player1.body.x + 32,
-      y: this.player1.body.y + 32,
+      x: this.player1.body.x + 16,
+      y: this.player1.body.y + 16,
     });
   }
 
-  collectXPCdr() {
-    this.xpCdr.disableBody(true, true);
+  collectXP(player, xp) {
     this.XpSound.play();
+    xp.disableBody(true, true);
+
+    if (xp == "xpCdr") {
+    } else if (xp == "xpDamage") {
+      this.P1Force += 1;
+    } else if (xp == "xpResistance") {
+      this.P1Resistence += 1;
+    } else if ((xp = "xpVelocity")) {
+      this.P1Agility += 100;
+    } else if ((xp = "xpLife")) {
+      this.P1Life += 1;
+    } else if ((xp = "xpVelocityAttack")) {
+      this.P1AttackSpeed += 1;
+    }
   }
 
-  collectXPDamage() {
-    this.xpDamage.disableBody(true, true);
-    this.XpSound.play();
-  }
-
-  collectxpResistance() {
-    this.xpResistance.disableBody(true, true);
-    this.XpSound.play();
-  }
-
-  collectXPVelocity() {
-    this.xpVelocity.disableBody(true, true);
-    this.XpSound.play();
-  }
-
-  collectXPLife() {
-    this.xpLife.disableBody(true, true);
-    this.XpSound.play();
-  }
-
-  collectXPVelocityAttack() {
-    this.xpVelocityAttack.disableBody(true, true);
-    this.XpSound.play();
-  }
-
-  collectCoin() {
-    this.coin.disableBody(true, true);
+  collectCoin(player, coin) {
     this.CoinSound.play();
+    coin.disableBody(true, true);
+
+    this.P1Coins += 1;
   }
 
   colliderObstacle() {

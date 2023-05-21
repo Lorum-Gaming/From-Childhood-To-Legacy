@@ -37,6 +37,10 @@ io.on("connection", (socket) => {
     socket.broadcast.to(room).emit("state-notify", state);
   });
 
+  socket.on("xps-publish", (room, xps) => {
+    socket.broadcast.to(room).emit("xps-notify", xps);
+  });
+
   socket.on("disconnect", () => {});
 });
 
