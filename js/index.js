@@ -18,7 +18,17 @@ class Game extends Phaser.Game {
     this.socket.on("connect", () => {
       //this.socket.emit("enter-room", this.socket.id);
     });
-    //
+
+    this.ice_servers = {
+      iceServers: [
+        {
+          urls: "stun:stun.l.google.com:19302",
+        },
+      ],
+    };
+
+    this.audio = document.querySelector("audio");
+
     // Scenes
     this.scene.add("menuScene", menuScene);
     this.scene.add("serverScene", serverScene);

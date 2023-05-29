@@ -235,19 +235,6 @@ export default class level01 extends Phaser.Scene {
       delay: 20,
     });
 
-    this.xpCdr = this.physics.add.sprite(200, 400, "xpCdr");
-    this.xpDamage = this.physics.add.sprite(250, 400, "xpDamage");
-    this.xpResistance = this.physics.add.sprite(300, 400, "xpResistance");
-    this.xpVelocity = this.physics.add.sprite(350, 400, "xpVelocity");
-    this.xpLife = this.physics.add.sprite(400, 400, "xpLife");
-    this.xpVelocityAttack = this.physics.add.sprite(
-      450,
-      400,
-      "xpVelocityAttack"
-    );
-
-    this.coin = this.physics.add.sprite(150, 400, "coin");
-
     this.anims.create({
       key: "xpCdr",
       frames: this.anims.generateFrameNumbers("xpCdr", {
@@ -318,15 +305,6 @@ export default class level01 extends Phaser.Scene {
       repeat: -1,
     });
 
-    this.xpCdr.anims.play("xpCdr");
-    this.xpDamage.anims.play("xpDamage");
-    this.xpResistance.anims.play("xpResistance");
-    this.xpVelocity.anims.play("xpVelocity");
-    this.xpLife.anims.play("xpLife");
-    this.xpVelocityAttack.anims.play("xpVelocityAttack");
-
-    this.coin.anims.play("coin");
-
     this.player1.setCollideWorldBounds(true);
 
     this.physics.add.collider(this.player1, this.floor, null, null, this);
@@ -338,72 +316,6 @@ export default class level01 extends Phaser.Scene {
       this
     );
 
-    this.physics.add.collider(this.xpCdr, this.floor, null, null, this);
-    this.physics.add.collider(this.xpDamage, this.floor, null, null, this);
-    this.physics.add.collider(this.xpResistance, this.floor, null, null, this);
-    this.physics.add.collider(this.xpVelocity, this.floor, null, null, this);
-    this.physics.add.collider(this.xpLife, this.floor, null, null, this);
-    this.physics.add.collider(
-      this.xpVelocityAttack,
-      this.floor,
-      null,
-      null,
-      this
-    );
-
-    this.physics.add.collider(this.coin, this.floor, null, null, this);
-
-    this.physics.add.collider(
-      this.player1,
-      this.xpCdr,
-      this.collectXPCdr,
-      null,
-      this
-    );
-    this.physics.add.collider(
-      this.player1,
-      this.xpDamage,
-      this.collectXPDamage,
-      null,
-      this
-    );
-    this.physics.add.collider(
-      this.player1,
-      this.xpResistance,
-      this.collectxpResistance,
-      null,
-      this
-    );
-    this.physics.add.collider(
-      this.player1,
-      this.xpVelocity,
-      this.collectXPVelocity,
-      null,
-      this
-    );
-    this.physics.add.collider(
-      this.player1,
-      this.xpLife,
-      this.collectXPLife,
-      null,
-      this
-    );
-    this.physics.add.collider(
-      this.player1,
-      this.xpVelocityAttack,
-      this.collectXPVelocityAttack,
-      null,
-      this
-    );
-
-    this.physics.add.collider(
-      this.player1,
-      this.coin,
-      this.collectCoin,
-      null,
-      this
-    );
-
     this.XpSound = this.sound.add("XpSound");
     this.CoinSound = this.sound.add("CoinSound");
 
@@ -411,6 +323,87 @@ export default class level01 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 3072, 2048);
     this.physics.world.setBounds(0, 0, 3072, 2048);
     this.cameras.main.startFollow(this.player1);
+
+    this.xps = [
+      {
+        x: 560,
+        y: 350,
+        type: "xpCdr",
+        objeto: undefined,
+      },
+      {
+        x: 100,
+        y: 400,
+        type: "xpCdr",
+        objeto: undefined,
+      },
+      {
+        x: 1500,
+        y: 1000,
+        type: "xpCdr",
+        objeto: undefined,
+      },
+      {
+        x: 650,
+        y: 800,
+        type: "xpCdr",
+        objeto: undefined,
+      },
+      {
+        x: 1820,
+        y: 500,
+        type: "xpCdr",
+        objeto: undefined,
+      },
+    ];
+
+    this.coins = [
+      {
+        x: 600,
+        y: 350,
+        objeto: undefined,
+      },
+      {
+        x: 150,
+        y: 400,
+        objeto: undefined,
+      },
+      {
+        x: 1550,
+        y: 1000,
+        objeto: undefined,
+      },
+      {
+        x: 700,
+        y: 800,
+        objeto: undefined,
+      },
+      {
+        x: 1870,
+        y: 500,
+        objeto: undefined,
+      },
+    ];
+
+    this.xps.forEach((item) => {
+      item = this.physics.add.sprite(item.x, item.y, item.type);
+      item.anims.play(`${item.type}`);
+      this.physics.add.collider(item, this.floor, null, null, this);
+      this.physics.add.collider(this.player1, item, this.collectXP, null, this);
+    });
+
+    this.coins.forEach((coin) => {
+      coin = this.physics.add.sprite(coin.x, coin.y, "coin");
+      coin.anims.play(`${coin.type}`);
+      this.physics.add.collider(coin, this.floor, null, null, this);
+      this.physics.add.collider(
+        this.player1,
+        coin,
+        this.collectCoin,
+        null,
+        this
+      );
+    });
 
     // Interface
     this.buttonRight = this.add
@@ -542,87 +535,6 @@ export default class level01 extends Phaser.Scene {
       })
       .setScrollFactor(0);
 
-    this.xps = [
-      {
-        x: 560,
-        y: 350,
-        type: "xpCdr",
-        objeto: undefined,
-      },
-      {
-        x: 100,
-        y: 400,
-        type: "xpCdr",
-        objeto: undefined,
-      },
-      {
-        x: 1500,
-        y: 1000,
-        type: "xpCdr",
-        objeto: undefined,
-      },
-      {
-        x: 650,
-        y: 800,
-        type: "xpCdr",
-        objeto: undefined,
-      },
-      {
-        x: 1820,
-        y: 500,
-        type: "xpCdr",
-        objeto: undefined,
-      },
-    ];
-
-    this.coins = [
-      {
-        x: 600,
-        y: 350,
-        objeto: undefined,
-      },
-      {
-        x: 150,
-        y: 400,
-        objeto: undefined,
-      },
-      {
-        x: 1550,
-        y: 1000,
-        objeto: undefined,
-      },
-      {
-        x: 700,
-        y: 800,
-        objeto: undefined,
-      },
-      {
-        x: 1870,
-        y: 500,
-        objeto: undefined,
-      },
-    ];
-
-    this.xps.forEach((item) => {
-      item = this.physics.add.sprite(item.x, item.y, item.type);
-      item.anims.play(`${item.type}`);
-      this.physics.add.collider(item, this.floor, null, null, this);
-      this.physics.add.collider(this.player1, item, this.collectXP, null, this);
-    });
-
-    this.coins.forEach((coin) => {
-      coin = this.physics.add.sprite(coin.x, coin.y, "coin");
-      coin.anims.play(`${coin.type}`);
-      this.physics.add.collider(coin, this.floor, null, null, this);
-      this.physics.add.collider(
-        this.player1,
-        coin,
-        this.collectCoin,
-        null,
-        this
-      );
-    });
-
     this.game.socket.on("state-notify", ({ frame, x, y }) => {
       this.player2.setFrame(frame);
       this.player2.x = x;
@@ -630,9 +542,20 @@ export default class level01 extends Phaser.Scene {
     });
 
     this.game.socket.on("xps-notify", (xps) => {
-      if (xps) {
-        this.cri;
+      for (let i = 0; i < xps.lenght; i++) {
+        if (xps[i]) {
+          this.xps[i].enableBody(
+            false,
+            this.xps[i].x,
+            this.xps[i].y,
+            true,
+            true
+          );
+        } else {
+          this.xps[i].disableBody(true, true);
+        }
       }
+      console.log("XPs-Notify Alert");
     });
   }
 
@@ -668,6 +591,14 @@ export default class level01 extends Phaser.Scene {
     } else if ((xp = "xpVelocityAttack")) {
       this.P1AttackSpeed += 1;
     }
+
+    console.log("Collect XP");
+
+    this.game.socket.emit(
+      "xps-publish",
+      this.game.room,
+      this.xps.map((xp) => xp.visible)
+    );
   }
 
   collectCoin(player, coin) {
