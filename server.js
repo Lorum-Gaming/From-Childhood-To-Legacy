@@ -16,7 +16,7 @@ io.on("connection", (socket) => {
     if (io.sockets.adapter.rooms.get(room).size === 1) {
       players = {
         first: socket.id,
-        second: undefined,
+        second: 0,
       };
 
       console.log("Sala %s com 1 jogador. Partida pronta para iniciar.", room);
