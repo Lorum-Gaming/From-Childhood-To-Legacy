@@ -32,9 +32,9 @@ io.on("connection", (socket) => {
         "Sala %s com 2 jogadores. Partida pronta para iniciar.",
         room
       );
-
-      io.to(room).emit("players", players);
     }
+
+    io.to(room).emit("players", players);
   });
 
   socket.on("state-publish", (room, state) => {

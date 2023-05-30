@@ -174,7 +174,104 @@ export default class level01 extends Phaser.Scene {
 
       this.local = "player2";
       this.player1 = this.physics.add.sprite(600, 225, this.local);
+
+      /* Captura de áudio */
+      navigator.mediaDevices
+        .getUserMedia({ video: false, audio: true })
+        .then((stream) => {
+          console.log(stream);
+
+          /* Consulta ao(s) servidor(es) ICE */
+          this.game.localConnection = new RTCPeerConnection(
+            this.game.ice_servers
+          );
+
+          /* Associação de mídia com conexão remota */
+          stream
+            .getTracks()
+            .forEach((track) =>
+              this.game.localConnection.addTrack(track, stream)
+            );
+
+          /* Oferta de candidatos ICE */
+          this.game.localConnection.onicecandidate = ({ candidate }) => {
+            candidate &&
+              this.game.socket.emit("candidate", this.game.sala, candidate);
+          };
+
+          /* Associação com o objeto HTML de áudio */
+          this.game.localConnection.ontrack = ({ streams: [stream] }) => {
+            this.game.audio.srcObject = stream;
+          };
+
+          /* Oferta de mídia */
+          this.game.localConnection
+            .createOffer()
+            .then((offer) =>
+              this.game.localConnection.setLocalDescription(offer)
+            )
+            .then(() => {
+              this.game.socket.emit(
+                "offer",
+                this.game.room,
+                this.game.localConnection.localDescription
+              );
+            });
+
+          this.game.midias = stream;
+        })
+        .catch((error) => console.log(error));
     }
+
+    /* Recebimento de oferta de mídia */
+    this.game.socket.on("offer", (description) => {
+      this.game.remoteConnection = new RTCPeerConnection(this.ice_servers);
+
+      /* Associação de mídia com conexão remota */
+      this.game.midias
+        .getTracks()
+        .forEach((track) =>
+          this.game.remoteConnection.addTrack(track, this.game.midias)
+        );
+
+      /* Contraoferta de candidatos ICE */
+      this.game.remoteConnection.onicecandidate = ({ candidate }) => {
+        candidate &&
+          this.game.socket.emit("candidate", this.game.room, candidate);
+      };
+
+      /* Associação com o objeto HTML de áudio */
+      let midias = this.game.midias;
+      this.game.remoteConnection.ontrack = ({ streams: [midias] }) => {
+        this.game.audio.srcObject = this.game.midias;
+      };
+
+      /* Contraoferta de mídia */
+      this.game.remoteConnection
+        .setRemoteDescription(description)
+        .then(() => this.game.remoteConnection.createAnswer())
+        .then((answer) =>
+          this.game.remoteConnection.setLocalDescription(answer)
+        )
+        .then(() => {
+          this.game.socket.emit(
+            "answer",
+            this.game.room,
+            this.game.remoteConnection.localDescription
+          );
+        });
+    });
+
+    /* Recebimento de contraoferta de mídia */
+    this.game.socket.on("answer", (description) => {
+      this.game.localConnection.setRemoteDescription(description);
+    });
+
+    /* Recebimento de candidato ICE */
+    this.game.socket.on("candidate", (candidate) => {
+      let conn = this.game.localConnection || this.game.remoteConnection;
+      conn.addIceCandidate(new RTCIceCandidate(candidate));
+    });
 
     this.anims.create({
       key: "idle",
