@@ -485,7 +485,7 @@ export default class level01 extends Phaser.Scene {
     this.xps.forEach((item) => {
       item.objeto = this.physics.add.sprite(item.x, item.y, item.type);
       item.objeto.anims.play(`${item.type}`);
-      this.physics.add.collider(item, this.floor, null, null, this);
+      this.physics.add.collider(item.objeto, this.floor, null, null, this);
       this.physics.add.overlap(
         this.player1,
         item.objeto,
@@ -645,7 +645,7 @@ export default class level01 extends Phaser.Scene {
     });
 
     this.game.socket.on("xps-notify", (xps) => {
-      for (let i = 0; i < xps.lenght; i++) {
+      for (let i = 0; i < xps.length; i++) {
         if (xps[i]) {
           this.xps[i].objeto.enableBody(
             false,
@@ -663,19 +663,15 @@ export default class level01 extends Phaser.Scene {
   }
 
   update() {
-    let frame;
-
     try {
-      frame = this.player1.anims.getFrameName();
+      this.game.socket.emit("state-publish", this.game.room, {
+        frame: this.player1.anims.getFrameName(),
+        x: this.player1.body.x + 16,
+        y: this.player1.body.y + 16,
+      });
     } catch (e) {
-      frame = 0;
+      console.log(e);
     }
-
-    this.game.socket.emit("state-publish", this.game.room, {
-      frame: frame,
-      x: this.player1.body.x + 16,
-      y: this.player1.body.y + 16,
-    });
   }
 
   collectXP(player, xp) {
