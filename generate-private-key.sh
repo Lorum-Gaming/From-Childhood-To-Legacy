@@ -1,0 +1,10 @@
+#!/bin/bash
+
+ARCHIVE="ifsc.key"
+
+cat > ${ARCHIVE} << EOF
+-----BEGIN OPENSSH PRIVATE KEY-----
+${SSH_PRIVATE_KEY}
+-----END OPENSSH PRIVATE KEY-----
+EOF
+chmod 0600 ${ARCHIVE}

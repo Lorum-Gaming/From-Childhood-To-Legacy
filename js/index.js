@@ -22,7 +22,7 @@ class Game extends Phaser.Game {
     this.ice_servers = {
       iceServers: [
         {
-          urls: "stun:stun.l.google.com:19302",
+          urls: "stun:stun.1.google.com:19302",
         },
       ],
     };
