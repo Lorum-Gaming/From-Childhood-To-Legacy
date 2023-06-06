@@ -45,6 +45,10 @@ io.on("connection", (socket) => {
     socket.broadcast.to(room).emit("xps-notify", xps);
   });
 
+  socket.on("coins-publish", (room, coins) => {
+    socket.broadcast.to(room).emit("coins-notify", coins);
+  });
+
   socket.on("offer", (room, description) => {
     socket.broadcast.to(room).emit("offer", description);
   });

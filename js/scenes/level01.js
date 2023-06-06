@@ -496,12 +496,12 @@ export default class level01 extends Phaser.Scene {
     });
 
     this.coins.forEach((coin) => {
-      coin = this.physics.add.sprite(coin.x, coin.y, "coin");
-      coin.anims.play(`${coin.type}`);
-      this.physics.add.collider(coin, this.floor, null, null, this);
-      this.physics.add.collider(
+      coin.objeto = this.physics.add.sprite(coin.x, coin.y, "coin");
+      coin.objeto.anims.play("coin");
+      this.physics.add.collider(coin.objeto, this.floor, null, null, this);
+      this.physics.add.overlap(
         this.player1,
-        coin,
+        coin.objeto,
         this.collectCoin,
         null,
         this
@@ -660,6 +660,23 @@ export default class level01 extends Phaser.Scene {
       }
       console.log("XPs-Notify Alert");
     });
+
+    this.game.socket.on("coins-notify", (coins) => {
+      for (let i = 0; i < coins.length; i++) {
+        if (coins[i]) {
+          this.coins[i].objeto.enableBody(
+            false,
+            this.coins[i].x,
+            this.coins[i].y,
+            true,
+            true
+          );
+        } else {
+          this.coins[i].objeto.disableBody(true, true);
+        }
+      }
+      console.log("Coins-Notify Alert");
+    });
   }
 
   update() {
@@ -705,6 +722,12 @@ export default class level01 extends Phaser.Scene {
     coin.disableBody(true, true);
 
     this.P1Coins += 1;
+
+    this.game.socket.emit(
+      "coins-publish",
+      this.game.room,
+      this.coins.map((coin) => coin.objeto.visible)
+    );
   }
 
   colliderObstacle() {
