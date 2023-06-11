@@ -14,7 +14,7 @@ export default class serverScene extends Phaser.Scene {
   create() {
     this.background = this.add.image(400, 225, "backgroundServer");
 
-    this.message = this.add.text(250, 75, "", {
+    this.message = this.add.text(215, 75, "", {
       fontFamily: "monospace",
       font: "24px Courier",
       fill: "#cccccc",
@@ -23,62 +23,62 @@ export default class serverScene extends Phaser.Scene {
     this.servers = [
       {
         number: "0",
-        x: 150,
-        y: 125,
+        x: 200,
+        y: 75,
         button: undefined,
       },
       {
         number: "1",
-        x: 150,
-        y: 175,
+        x: 200,
+        y: 135,
         button: undefined,
       },
       {
         number: "2",
-        x: 150,
-        y: 225,
+        x: 200,
+        y: 195,
         button: undefined,
       },
       {
         number: "3",
-        x: 150,
-        y: 275,
+        x: 200,
+        y: 255,
         button: undefined,
       },
       {
         number: "4",
-        x: 150,
-        y: 325,
+        x: 200,
+        y: 315,
         button: undefined,
       },
       {
         number: "5",
         x: 450,
-        y: 125,
+        y: 75,
         button: undefined,
       },
       {
         number: "6",
         x: 450,
-        y: 175,
+        y: 135,
         button: undefined,
       },
       {
         number: "7",
         x: 450,
-        y: 225,
+        y: 195,
         button: undefined,
       },
       {
         number: "8",
         x: 450,
-        y: 275,
+        y: 255,
         button: undefined,
       },
       {
         number: "9",
         x: 450,
-        y: 325,
+        y: 315,
         button: undefined,
       },
     ];
