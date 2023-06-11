@@ -27,8 +27,7 @@ export default class level01 extends Phaser.Scene {
     this.P1Resistence = 1;
     this.P1AttackSpeed = 1;
     this.P1Agility = 160;
-    this.P1Life = 100;
-    this.P1LifeMax = 150;
+    this.P1Life = 6;
 
     // XP
     this.xpCdr;
@@ -125,6 +124,12 @@ export default class level01 extends Phaser.Scene {
     this.load.spritesheet("coin", "../../assets/objects/coin.png", {
       frameWidth: 32,
       frameHeight: 32,
+    });
+
+    /*Vida */
+    this.load.spritesheet("life", "../../assets/interface/life.png", {
+      frameWidth: 48,
+      frameHeight: 48,
     });
 
     this.load.audio("Level01Sound", "../../assets/sounds/Level01Sound.mp3");
@@ -638,6 +643,11 @@ export default class level01 extends Phaser.Scene {
       })
       .setScrollFactor(0);
 
+    this.lifeInterface = this.add
+      .sprite(70, 40, "life")
+      .setScrollFactor(0)
+      .setScale(2);
+
     this.game.socket.on("state-notify", ({ frame, x, y }) => {
       this.player2.setFrame(frame);
       this.player2.x = x;
@@ -732,6 +742,18 @@ export default class level01 extends Phaser.Scene {
 
   colliderObstacle() {
     //alert("Player Die");
-    this.player1.x = 100;
+
+    this.P1Life -= 1;
+    this.lifeInterface.setFrame(6 - this.P1Life);
+    console.log(this.P1Life);
+
+    if (this.P1Life <= 0) {
+      this.game.scene.stop("level01");
+      this.game.scene.start("gameOver");
+      this.game.socket.emit("scene-publish", this.game.room, "perda");
+    } else {
+      this.player1.setVelocityY(-200);
+      this.player1.setVelocityX(-150);
+    }
   }
 }
