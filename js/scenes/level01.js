@@ -53,16 +53,15 @@ export default class level01 extends Phaser.Scene {
 
     this.load.tilemapTiledJSON("map", "../../assets/phases/level01.json");
 
-    this.load.spritesheet(
-      "player1",
-      "../../assets/characters/player1/player1.png",
-      { frameWidth: 32, frameHeight: 32 }
-    );
-    this.load.spritesheet(
-      "player2",
-      "../../assets/characters/player2/player2.png",
-      { frameWidth: 32, frameHeight: 32 }
-    );
+    this.load.spritesheet("player1", "../../assets/characters/player1.png", {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
+
+    this.load.spritesheet("player2", "../../assets/characters/player2.png", {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
 
     this.load.spritesheet(
       "buttonLeft",
@@ -172,7 +171,7 @@ export default class level01 extends Phaser.Scene {
       this.player1 = this.physics.add.sprite(100, 300, this.local);
 
       this.remoto = "player2";
-      this.player2 = this.add.sprite(200, 50, this.local);
+      this.player2 = this.add.sprite(200, 50, this.remoto);
     } else {
       this.remoto = "player1";
       this.player2 = this.add.sprite(100, 50, this.remoto);
@@ -230,7 +229,7 @@ export default class level01 extends Phaser.Scene {
 
     /* Recebimento de oferta de mídia */
     this.game.socket.on("offer", (description) => {
-      this.game.remoteConnection = new RTCPeerConnection(this.ice_servers);
+      this.game.remoteConnection = new RTCPeerConnection(this.game.ice_servers);
 
       /* Associação de mídia com conexão remota */
       this.game.midias
@@ -279,38 +278,28 @@ export default class level01 extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "idle",
-      frames: this.anims.generateFrameNumbers("player1", {
+      key: "idlePLayer1",
+      frames: this.anims.generateFrameNumbers(this.local, {
         start: 0,
         end: 1,
       }),
-      frameRate: 5,
+      frameRate: 3,
       repeat: -1, // loop
     });
 
     this.anims.create({
-      key: "run",
-      frames: this.anims.generateFrameNumbers("player1", {
-        start: 24,
-        end: 31,
+      key: "runPLayer1",
+      frames: this.anims.generateFrameNumbers(this.local, {
+        start: 6,
+        end: 11,
       }),
       frameRate: 10,
       repeat: -1, // loop
     });
 
     this.anims.create({
-      key: "jump",
-      frames: this.anims.generateFrameNumbers("player1", {
-        start: 43,
-        end: 43,
-      }),
-      frameRate: 10,
-      repeat: -1, // loop
-    });
-
-    this.anims.create({
-      key: "fall",
-      frames: this.anims.generateFrameNumbers("player1", {
+      key: "jumpPlayer1",
+      frames: this.anims.generateFrameNumbers(this.local, {
         start: 45,
         end: 45,
       }),
@@ -319,22 +308,22 @@ export default class level01 extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "attack",
-      frames: this.anims.generateFrameNumbers("player1", {
-        start: 64,
-        end: 71,
+      key: "attackPlayer1",
+      frames: this.anims.generateFrameNumbers(this.local, {
+        start: 18,
+        end: 22,
       }),
       frameRate: 10,
     });
 
     this.anims.create({
-      key: "dash",
-      frames: this.anims.generateFrameNumbers("player1", {
-        start: 64,
-        end: 71,
+      key: "dashPlayer1",
+      frames: this.anims.generateFrameNumbers(this.local, {
+        start: 12,
+        end: 17,
       }),
       frameRate: 20,
-      delay: 20,
+      delay: 10,
     });
 
     this.anims.create({
@@ -524,7 +513,7 @@ export default class level01 extends Phaser.Scene {
 
         this.player1.setFlipX(false);
         this.player1.setVelocityX(this.P1Agility);
-        this.player1.anims.play("run", true);
+        this.player1.anims.play("runPLayer1", true);
         this.P1Position = "right";
       })
 
@@ -533,7 +522,7 @@ export default class level01 extends Phaser.Scene {
 
         this.player1.setFlipX(false);
         this.player1.setVelocityX(0);
-        this.player1.anims.play("idle", true);
+        this.player1.anims.play("idlePLayer1", true);
       });
 
     this.buttonLeft = this.add
@@ -546,7 +535,7 @@ export default class level01 extends Phaser.Scene {
 
         this.player1.setFlipX(true);
         this.player1.setVelocityX(-this.P1Agility);
-        this.player1.anims.play("run", true);
+        this.player1.anims.play("runPLayer1", true);
         this.P1Position = "left";
       })
 
@@ -555,7 +544,7 @@ export default class level01 extends Phaser.Scene {
 
         this.player1.setFlipX(true);
         this.player1.setVelocityX(0);
-        this.player1.anims.play("idle", true);
+        this.player1.anims.play("idlePLayer1", true);
       });
 
     this.buttonUp = this.add
@@ -566,12 +555,12 @@ export default class level01 extends Phaser.Scene {
       .on("pointerover", () => {
         this.buttonUp.setFrame(1);
         this.player1.setVelocityY(-200);
-        this.player1.anims.play("jump", true);
+        this.player1.anims.play("jumpPlayer1", true);
       })
 
       .on("pointerout", () => {
         this.buttonUp.setFrame(0);
-        this.player1.anims.play("idle", true);
+        this.player1.anims.play("idlePLayer1", true);
       });
 
     this.buttonAttack = this.add
@@ -581,7 +570,7 @@ export default class level01 extends Phaser.Scene {
 
       .on("pointerdown", () => {
         this.player1.anims.stop();
-        this.player1.anims.play("attack", true);
+        this.player1.anims.play("attackPlayer1", true);
       })
 
       .on("pointerover", () => {
@@ -594,7 +583,7 @@ export default class level01 extends Phaser.Scene {
         this.player1.on(
           "animationcomplete-attack",
           () => {
-            this.player1.anims.play("idle", true);
+            this.player1.anims.play("idlePLayer1", true);
           },
           this
         );
@@ -606,14 +595,14 @@ export default class level01 extends Phaser.Scene {
       .setScrollFactor(0)
 
       .on("pointerdown", () => {
-        if (this.player1.anims.currentAnim.key === "idle") {
+        if (this.player1.anims.currentAnim.key === "idlePLayer1") {
           if (this.player1.flipX) {
             this.player1.setVelocityX(-700);
           } else {
             this.player1.setVelocityX(700);
           }
 
-          this.player1.anims.play("dash", true);
+          this.player1.anims.play("dashPlayer1", true);
 
           setTimeout(() => {
             this.player1.setVelocityX(0);
@@ -627,11 +616,11 @@ export default class level01 extends Phaser.Scene {
 
       .on("pointerout", () => {
         this.buttonDash.setFrame(0);
-        this.player1.anims.play("idle", true);
+        this.player1.anims.play("idlePLayer1", true);
       });
 
     this.buttonScreen = this.add
-      .sprite(750, 50, "buttonScreen", 0)
+      .sprite(750, 40, "buttonScreen", 0)
       .setInteractive()
 
       .on("pointerdown", () => {
@@ -647,6 +636,18 @@ export default class level01 extends Phaser.Scene {
       .sprite(70, 40, "life")
       .setScrollFactor(0)
       .setScale(2);
+
+    this.coinImageInterface = this.add
+      .sprite(625, 40, "coin", 0)
+      .setScrollFactor(0);
+
+    this.coinCountInterface = this.add
+      .text(650, 30, `${this.P1Coins}`, {
+        fontFamily: "monospace",
+        font: "20px Courier",
+        fill: "#cccccc",
+      })
+      .setScrollFactor(0);
 
     this.game.socket.on("state-notify", ({ frame, x, y }) => {
       this.player2.setFrame(frame);
@@ -693,12 +694,14 @@ export default class level01 extends Phaser.Scene {
     try {
       this.game.socket.emit("state-publish", this.game.room, {
         frame: this.player1.anims.getFrameName(),
-        x: this.player1.body.x + 16,
-        y: this.player1.body.y + 16,
+        x: this.player1.body.x + 32,
+        y: this.player1.body.y + 32,
       });
     } catch (e) {
       console.log(e);
     }
+
+    this.coinCountInterface.setText(`${this.P1Coins}`);
   }
 
   collectXP(player, xp) {

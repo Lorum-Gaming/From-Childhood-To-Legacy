@@ -12,21 +12,31 @@ import victory from "./scenes/victory.js";
 class Game extends Phaser.Game {
   constructor() {
     super(config);
-    //
-    // WebSocket
-    this.socket = io();
-    this.socket.on("connect", () => {
-      //this.socket.emit("enter-room", this.socket.id);
-    });
 
-    this.ice_servers = {
-      iceServers: [
+    let iceServers;
+    if (window.location.host === "ifsc.digital") {
+      this.socket = io.connect({ path: "/God-Between-Us/socket.io/" });
+
+      iceServers = [
         {
-          urls: "stun:stun.1.google.com:19302",
+          urls: "stun:ifsc.digital",
         },
-      ],
-    };
+        {
+          urls: "turns:ifsc.digital",
+          username: "adcipt",
+          credential: "adcipt20231",
+        },
+      ];
+    } else {
+      this.socket = io();
 
+      iceServers = [
+        {
+          urls: "stun:stun.l.google.com:19302",
+        },
+      ];
+    }
+    this.ice_servers = { iceServers };
     this.audio = document.querySelector("audio");
 
     // Scenes

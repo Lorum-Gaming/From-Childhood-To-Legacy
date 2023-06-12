@@ -105,6 +105,7 @@ export default class serverScene extends Phaser.Scene {
 
       if (players.second) {
         this.message.destroy();
+        this.background.destroy();
         this.game.players = players;
         this.game.scene.start("level01");
       } else if (players.first) {
