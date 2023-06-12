@@ -50,8 +50,9 @@ export default class level01 extends Phaser.Scene {
     this.load.image("BG", "../../assets/tiles/BG.png");
     this.load.image("chao", "../../assets/tiles/chao.png");
     this.load.image("obstaculo", "../../assets/tiles/obstaculo.png");
+    this.load.image("decoracao", "../../assets/tiles/decoracao.png");
 
-    this.load.tilemapTiledJSON("map", "../../assets/phases/level01.json");
+    this.load.tilemapTiledJSON("map", "../../assets/phases/level.json");
 
     this.load.spritesheet("player1", "../../assets/characters/player1.png", {
       frameWidth: 64,
@@ -131,6 +132,20 @@ export default class level01 extends Phaser.Scene {
       frameHeight: 48,
     });
 
+    this.load.spritesheet("ravana", "../../assets/characters/ravana.png", {
+      frameWidth: 128,
+      frameHeight: 128,
+    });
+
+    this.load.spritesheet(
+      "ravanaAttack",
+      "../../assets/effects/ravanaAttack.png",
+      {
+        frameWidth: 64,
+        frameHeight: 64,
+      }
+    );
+
     this.load.audio("Level01Sound", "../../assets/sounds/Level01Sound.mp3");
     this.load.audio("XpSound", "../../assets/sounds/XpSound.mp3");
     this.load.audio("CoinSound", "../../assets/sounds/CoinSound.mp3");
@@ -148,10 +163,17 @@ export default class level01 extends Phaser.Scene {
     this.backgroundTileset = this.map.addTilesetImage("BG", "BG");
     this.floorTileset = this.map.addTilesetImage("chao", "chao");
     this.obstacleTileset = this.map.addTilesetImage("obstaculo", "obstaculo");
+    this.decoracaoTileset = this.map.addTilesetImage("decoracao", "decoracao");
 
     this.background = this.map.createStaticLayer(
-      "bg",
+      "BG",
       this.backgroundTileset,
+      0,
+      0
+    );
+    this.background = this.map.createStaticLayer(
+      "decoracao",
+      this.decoracaoTileset,
       0,
       0
     );
@@ -163,21 +185,21 @@ export default class level01 extends Phaser.Scene {
       0
     );
 
-    this.floor.setCollisionByProperty({ colide: true });
-    this.obstacle.setCollisionByProperty({ colide: true });
+    this.floor.setCollisionByProperty({ colides: true });
+    this.obstacle.setCollisionByProperty({ colides: true });
 
     if (this.game.players.first === this.game.socket.id) {
       this.local = "player1";
       this.player1 = this.physics.add.sprite(100, 300, this.local);
 
       this.remoto = "player2";
-      this.player2 = this.add.sprite(200, 50, this.remoto);
+      this.player2 = this.add.sprite(600, 50, this.remoto);
     } else {
       this.remoto = "player1";
       this.player2 = this.add.sprite(100, 50, this.remoto);
 
       this.local = "player2";
-      this.player1 = this.physics.add.sprite(600, 225, this.local);
+      this.player1 = this.physics.add.sprite(600, 50, this.local);
 
       /* Captura de áudio */
       navigator.mediaDevices
@@ -276,6 +298,11 @@ export default class level01 extends Phaser.Scene {
       let conn = this.game.localConnection || this.game.remoteConnection;
       conn.addIceCandidate(new RTCIceCandidate(candidate));
     });
+
+    this.ravana = this.physics.add.sprite(500, 10, "ravana");
+
+    this.physics.add.collider(this.ravana, this.floor, null, null, this);
+    this.physics.add.collider(this.player1, this.ravana, null, null, this);
 
     this.anims.create({
       key: "idlePLayer1",
@@ -393,6 +420,16 @@ export default class level01 extends Phaser.Scene {
         end: 6,
       }),
       frameRate: 8,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "ravanaIdle",
+      frames: this.anims.generateFrameNumbers("ravana", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 7,
       repeat: -1,
     });
 
@@ -597,9 +634,9 @@ export default class level01 extends Phaser.Scene {
       .on("pointerdown", () => {
         if (this.player1.anims.currentAnim.key === "idlePLayer1") {
           if (this.player1.flipX) {
-            this.player1.setVelocityX(-700);
+            this.player1.setVelocityX(-1000);
           } else {
-            this.player1.setVelocityX(700);
+            this.player1.setVelocityX(1000);
           }
 
           this.player1.anims.play("dashPlayer1", true);
