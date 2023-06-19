@@ -5,7 +5,6 @@ import config from "./config.js";
 import menuScene from "./scenes/menuScene.js";
 import serverScene from "./scenes/serverScene.js";
 import level01 from "./scenes/level01.js";
-import tutorial from "./scenes/tutorial.js";
 import gameOver from "./scenes/gameOver.js";
 import victory from "./scenes/victory.js";
 
@@ -43,7 +42,6 @@ class Game extends Phaser.Game {
     this.scene.add("menuScene", menuScene);
     this.scene.add("serverScene", serverScene);
     this.scene.add("level01", level01);
-    this.scene.add("tutorial", tutorial);
 
     this.scene.add("gameOver", gameOver);
     this.scene.add("victory", victory);

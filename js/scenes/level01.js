@@ -29,6 +29,8 @@ export default class level01 extends Phaser.Scene {
     this.P1Agility = 160;
     this.P1Life = 6;
 
+    this.RavanaLife = 1;
+
     // XP
     this.xpCdr;
     this.xpDamage;
@@ -47,108 +49,100 @@ export default class level01 extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("BG", "../../assets/tiles/BG.png");
-    this.load.image("chao", "../../assets/tiles/chao.png");
-    this.load.image("obstaculo", "../../assets/tiles/obstaculo.png");
-    this.load.image("decoracao", "../../assets/tiles/decoracao.png");
+    this.load.image("BG", "./assets/tiles/BG.png");
+    this.load.image("chao", "./assets/tiles/chao.png");
+    this.load.image("obstaculo", "./assets/tiles/obstaculo.png");
+    this.load.image("decoracao", "./assets/tiles/decoracao.png");
 
-    this.load.tilemapTiledJSON("map", "../../assets/phases/level.json");
+    this.load.tilemapTiledJSON("map", "./assets/phases/level.json");
 
-    this.load.spritesheet("player1", "../../assets/characters/player1.png", {
+    this.load.spritesheet("player1", "./assets/characters/player1.png", {
       frameWidth: 64,
       frameHeight: 64,
     });
 
-    this.load.spritesheet("player2", "../../assets/characters/player2.png", {
+    this.load.spritesheet("player2", "./assets/characters/player2.png", {
       frameWidth: 64,
       frameHeight: 64,
     });
 
-    this.load.spritesheet(
-      "buttonLeft",
-      "../../assets/interface/buttonLeft.png",
-      { frameWidth: 48, frameHeight: 48 }
-    );
-    this.load.spritesheet(
-      "buttonRight",
-      "../../assets/interface/buttonRight.png",
-      { frameWidth: 48, frameHeight: 48 }
-    );
-    this.load.spritesheet("buttonUp", "../../assets/interface/buttonJump.png", {
+    this.load.spritesheet("buttonLeft", "./assets/interface/buttonLeft.png", {
+      frameWidth: 48,
+      frameHeight: 48,
+    });
+    this.load.spritesheet("buttonRight", "./assets/interface/buttonRight.png", {
+      frameWidth: 48,
+      frameHeight: 48,
+    });
+    this.load.spritesheet("buttonUp", "./assets/interface/buttonJump.png", {
       frameWidth: 48,
       frameHeight: 48,
     });
     this.load.spritesheet(
       "buttonAttack",
-      "../../assets/interface/buttonAttack.png",
+      "./assets/interface/buttonAttack.png",
       { frameWidth: 48, frameHeight: 48 }
     );
-    this.load.spritesheet(
-      "buttonDash",
-      "../../assets/interface/buttonDash.png",
-      { frameWidth: 48, frameHeight: 48 }
-    );
+    this.load.spritesheet("buttonDash", "./assets/interface/buttonDash.png", {
+      frameWidth: 48,
+      frameHeight: 48,
+    });
     this.load.spritesheet(
       "buttonScreen",
-      "../../assets/interface/buttonScreen.png",
+      "./assets/interface/buttonScreen.png",
       { frameWidth: 16, frameHeight: 16 }
     );
 
-    this.load.spritesheet("xpCdr", "../../assets/objects/xpCdr.png", {
+    this.load.spritesheet("xpCdr", "./assets/objects/xpCdr.png", {
       frameWidth: 16,
       frameHeight: 16,
     });
-    this.load.spritesheet("xpDamage", "../../assets/objects/xpDamage.png", {
+    this.load.spritesheet("xpDamage", "./assets/objects/xpDamage.png", {
       frameWidth: 16,
       frameHeight: 16,
     });
-    this.load.spritesheet(
-      "xpResistance",
-      "../../assets/objects/xpResistance.png",
-      { frameWidth: 16, frameHeight: 16 }
-    );
-    this.load.spritesheet("xpVelocity", "../../assets/objects/xpVelocity.png", {
+    this.load.spritesheet("xpResistance", "./assets/objects/xpResistance.png", {
       frameWidth: 16,
       frameHeight: 16,
     });
-    this.load.spritesheet("xpLife", "../../assets/objects/xpLife.png", {
+    this.load.spritesheet("xpVelocity", "./assets/objects/xpVelocity.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet("xpLife", "./assets/objects/xpLife.png", {
       frameWidth: 16,
       frameHeight: 16,
     });
     this.load.spritesheet(
       "xpVelocityAttack",
-      "../../assets/objects/xpVelocityAttack.png",
+      "./assets/objects/xpVelocityAttack.png",
       { frameWidth: 16, frameHeight: 16 }
     );
 
-    this.load.spritesheet("coin", "../../assets/objects/coin.png", {
+    this.load.spritesheet("coin", "./assets/objects/coin.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
 
     /*Vida */
-    this.load.spritesheet("life", "../../assets/interface/life.png", {
+    this.load.spritesheet("life", "./assets/interface/life.png", {
       frameWidth: 48,
       frameHeight: 48,
     });
 
-    this.load.spritesheet("ravana", "../../assets/characters/ravana.png", {
+    this.load.spritesheet("ravana", "./assets/characters/ravana.png", {
       frameWidth: 128,
       frameHeight: 128,
     });
 
-    this.load.spritesheet(
-      "ravanaAttack",
-      "../../assets/effects/ravanaAttack.png",
-      {
-        frameWidth: 64,
-        frameHeight: 64,
-      }
-    );
+    this.load.spritesheet("ravanaAttack", "./assets/effects/ravanaAttack.png", {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
 
-    this.load.audio("Level01Sound", "../../assets/sounds/Level01Sound.mp3");
-    this.load.audio("XpSound", "../../assets/sounds/XpSound.mp3");
-    this.load.audio("CoinSound", "../../assets/sounds/CoinSound.mp3");
+    this.load.audio("Level01Sound", "./assets/sounds/Level01Sound.mp3");
+    this.load.audio("XpSound", "./assets/sounds/XpSound.mp3");
+    this.load.audio("CoinSound", "./assets/sounds/CoinSound.mp3");
   }
 
   create() {
@@ -193,13 +187,13 @@ export default class level01 extends Phaser.Scene {
       this.player1 = this.physics.add.sprite(100, 300, this.local);
 
       this.remoto = "player2";
-      this.player2 = this.add.sprite(600, 50, this.remoto);
+      this.player2 = this.add.sprite(1000, 600, this.remoto);
     } else {
       this.remoto = "player1";
       this.player2 = this.add.sprite(100, 50, this.remoto);
 
       this.local = "player2";
-      this.player1 = this.physics.add.sprite(600, 50, this.local);
+      this.player1 = this.physics.add.sprite(1000, 600, this.local);
 
       /* Captura de áudio */
       navigator.mediaDevices
@@ -299,10 +293,16 @@ export default class level01 extends Phaser.Scene {
       conn.addIceCandidate(new RTCIceCandidate(candidate));
     });
 
-    this.ravana = this.physics.add.sprite(500, 10, "ravana");
+    this.ravana = this.physics.add.sprite(1200, 800, "ravana");
+    this.ravana.setCollideWorldBounds(true);
 
-    this.physics.add.collider(this.ravana, this.floor, null, null, this);
-    this.physics.add.collider(this.player1, this.ravana, null, null, this);
+    this.physics.add.overlap(
+      this.player1,
+      this.ravana,
+      this.colliderRavana,
+      null,
+      this
+    );
 
     this.anims.create({
       key: "idlePLayer1",
@@ -351,6 +351,16 @@ export default class level01 extends Phaser.Scene {
       }),
       frameRate: 20,
       delay: 10,
+    });
+
+    this.anims.create({
+      key: "hurtPlayer1",
+      frames: this.anims.generateFrameNumbers(this.local, {
+        start: 30,
+        end: 32,
+      }),
+      frameRate: 20,
+      delay: 4,
     });
 
     this.anims.create({
@@ -429,9 +439,11 @@ export default class level01 extends Phaser.Scene {
         start: 0,
         end: 5,
       }),
-      frameRate: 7,
+      frameRate: 5,
       repeat: -1,
     });
+
+    this.ravana.anims.play("ravanaIdle");
 
     this.player1.setCollideWorldBounds(true);
 
@@ -607,6 +619,7 @@ export default class level01 extends Phaser.Scene {
 
       .on("pointerdown", () => {
         this.player1.anims.stop();
+        this.player1.body.x += 100;
         this.player1.anims.play("attackPlayer1", true);
       })
 
@@ -728,6 +741,7 @@ export default class level01 extends Phaser.Scene {
   }
 
   update() {
+    console.log(this.player1.frame.name);
     try {
       this.game.socket.emit("state-publish", this.game.room, {
         frame: this.player1.anims.getFrameName(),
@@ -739,6 +753,62 @@ export default class level01 extends Phaser.Scene {
     }
 
     this.coinCountInterface.setText(`${this.P1Coins}`);
+
+    if (this.P1Life > 0) {
+      /* Monstro segue personagem mais próximo */
+      let hipotenusa_jogador_1 = Phaser.Math.Distance.Between(
+        this.player1.x,
+        this.ravana.x,
+        this.player1.y,
+        this.ravana.y
+      );
+
+      let hipotenusa_jogador_2 = Phaser.Math.Distance.Between(
+        this.player2.x,
+        this.ravana.x,
+        this.player2.y,
+        this.ravana.y
+      );
+
+      /* Por padrão, o primeiro jogador é o alvo */
+      let alvo = this.player1;
+
+      if (hipotenusa_jogador_1 > hipotenusa_jogador_2) {
+        /* Jogador 2 é perseguido pelo monstro */
+        alvo = this.player2;
+      }
+
+      /* Sentido no eixo X */
+      let diffX = alvo.x - this.ravana.x;
+
+      if (diffX >= 10) {
+        this.ravana.setVelocityX(50);
+      } else if (diffX <= 10) {
+        this.ravana.setVelocityX(-50);
+      }
+
+      /* Sentido no eixo Y */
+      let diffY = alvo.y - this.ravana.y;
+
+      if (diffY >= 10) {
+        this.ravana.setVelocityY(50);
+      } else if (diffY <= 10) {
+        this.ravana.setVelocityY(-50);
+      }
+
+      /* Animação */
+      if (diffX > 0) {
+        this.ravana.anims.play("ravanaIdle");
+      } else if (diffX < 0) {
+        this.ravana.anims.play("ravanaIdle");
+      } else if (diffY > 0) {
+        this.ravana.anims.play("ravanaIdle");
+      } else if (diffY < 0) {
+        this.ravana.anims.play("ravanaIdle");
+      } else {
+        this.ravana.anims.play("ravanaIdle");
+      }
+    }
   }
 
   collectXP(player, xp) {
@@ -794,6 +864,36 @@ export default class level01 extends Phaser.Scene {
     } else {
       this.player1.setVelocityY(-200);
       this.player1.setVelocityX(-150);
+    }
+  }
+
+  colliderRavana() {
+    this.P1Life -= 1;
+    this.lifeInterface.setFrame(6 - this.P1Life);
+
+    if (
+      this.player1.frame.name >= 18 &&
+      this.player1.frame.name <= 22 &&
+      this.P1Position == "right"
+    ) {
+      if (this.RavanaLife == 0) {
+        this.ravana.body.x += 2000;
+      } else {
+        this.ravana.body.x += 150;
+        this.ravana.body.y += 50;
+        this.RavanaLife--;
+      }
+    } else {
+      if (this.player1.anims)
+        if (this.P1Life <= 0) {
+          this.game.scene.stop("level01");
+          this.game.scene.start("gameOver");
+          this.game.socket.emit("scene-publish", this.game.room, "perda");
+        } else {
+          this.player1.body.x = this.player1.body.x - 150;
+          this.ravana.setVelocityX(0);
+          this.player1.anims.play("hurtPlayer1");
+        }
     }
   }
 }

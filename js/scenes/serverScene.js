@@ -7,7 +7,7 @@ export default class serverScene extends Phaser.Scene {
   preload() {
     this.load.image(
       "backgroundServer",
-      "../../assets/screens/backgroundServer.png"
+      "./assets/screens/backgroundServer.png"
     );
   }
 
