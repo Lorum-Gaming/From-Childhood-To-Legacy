@@ -184,16 +184,16 @@ export default class level01 extends Phaser.Scene {
 
     if (this.game.players.first === this.game.socket.id) {
       this.local = "player1";
-      this.player1 = this.physics.add.sprite(100, 300, this.local);
+      this.player1 = this.physics.add.sprite(100, 50, this.local);
 
       this.remoto = "player2";
-      this.player2 = this.add.sprite(1000, 600, this.remoto);
+      this.player2 = this.add.sprite(100, 50, this.remoto);
     } else {
       this.remoto = "player1";
       this.player2 = this.add.sprite(100, 50, this.remoto);
 
       this.local = "player2";
-      this.player1 = this.physics.add.sprite(1000, 600, this.local);
+      this.player1 = this.physics.add.sprite(100, 50, this.local);
 
       /* Captura de áudio */
       navigator.mediaDevices
