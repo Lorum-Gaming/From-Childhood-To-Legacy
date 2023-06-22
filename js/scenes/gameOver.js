@@ -9,13 +9,42 @@ export default class gameOver extends Phaser.Scene {
   }
 
   create() {
-    this.button = this.add.image(400, 225, "gameOverImage").setInteractive();
+    this.bg = this.add.image(400, 225, "gameOverImage");
 
-    this.button.on(
+    this.messageRestart = this.add
+      .text(175, 250, "[Voltar ao Menu]", {
+        fontFamily: "monospace",
+        font: "24px Courier",
+        fill: "#cccccc",
+      })
+      .setInteractive();
+
+    this.messageLore = this.add
+      .text(450, 250, "[Veja a Lore]", {
+        fontFamily: "monospace",
+        font: "24px Courier",
+        fill: "#cccccc",
+      })
+      .setInteractive();
+
+    this.messageRestart.on(
       "pointerdown",
       function () {
-        this.button.destroy();
+        this.messageRestart.destroy();
+        this.messageLore.destroy();
+        this.bg.destroy();
         this.game.scene.start("menuScene");
+      },
+      this
+    );
+
+    this.messageLore.on(
+      "pointerdown",
+      function () {
+        this.messageRestart.destroy();
+        this.messageLore.destroy();
+        this.bg.destroy();
+        window.open("https://github.com/boidacarapreta/adcipt20231", "_blank");
       },
       this
     );
