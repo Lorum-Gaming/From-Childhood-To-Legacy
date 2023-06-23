@@ -27,7 +27,7 @@ export default class menuScene extends Phaser.Scene {
       "pointerdown",
       function () {
         this.button.destroy();
-        window.open("https://github.com/boidacarapreta/adcipt20231", "_blank");
+        window.location.assign("https://ifsc.digital/God-Between-Us/gbu-story.html");
       },
       this
     );

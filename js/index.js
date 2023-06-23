@@ -35,6 +35,7 @@ class Game extends Phaser.Game {
         },
       ];
     }
+
     this.ice_servers = { iceServers };
     this.audio = document.querySelector("audio");
 
